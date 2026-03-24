@@ -1,0 +1,558 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0027FC895BF28ADDB8C6024D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AC461524C0BE02BC07213D9 /* Assets.xcassets */; };
+		0E4E74014BC1579EA0D7B0B3 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6ACBE70DF9EA3E13CE11A3 /* Product.swift */; };
+		12A8D682635068B28BA5DB38 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79158189A18EE7BFFD900F6 /* AddProductView.swift */; };
+		1AEC1B78D1FE99A15E19794F /* OpenFoodFactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1359AF55B9B218217EA3C54E /* OpenFoodFactsService.swift */; };
+		1F33E4473B8A7D4E7F197728 /* EditProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA694B580FEF65A57AEE68 /* EditProductView.swift */; };
+		55A3DAA1EE4FF48C5595991A /* ProductStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5607B7C8FCC5D61F3F3BB35C /* ProductStore.swift */; };
+		7CE0B2570A1C05117DEA2564 /* turkish_products.json in Resources */ = {isa = PBXBuildFile; fileRef = BC6E215AD31AAD2AFC39F8C0 /* turkish_products.json */; };
+		8C3F6712BB623E3531B689FE /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DAD225A6CDB599247275E /* ProductListView.swift */; };
+		8EB4866E85AC7F570C579097 /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4519A87896093CD123BF600B /* ShoppingListView.swift */; };
+		8FC0ED91CAA7E735347FC8A8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC120D6F68686CB785AAA60 /* NotificationService.swift */; };
+		A47774DB39AF72EF9B8FFCD9 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C417BA8BA8977C30ECC48 /* BarcodeScannerView.swift */; };
+		B8723B19091C04EFC2D46BB3 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1795A713A62243E21AEF7F /* App.swift */; };
+		BCBE15FD97B69167C771E440 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0626F4134AC7CCC2AE48218 /* ShoppingItem.swift */; };
+		C5654435BDEA06C33C22778E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64240FB60A8F5D9C2AD761D3 /* Localizable.strings */; };
+		DBE2F0D96847C78801F16E67 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF825B2415FA7E1FA0C8ADD /* OnboardingView.swift */; };
+		DC0E8DC709AA196E7C2BAD1A /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6ACBE70DF9EA3E13CE11A3 /* Product.swift */; };
+		E1C7400D960DF494D58196E1 /* FreshTrackWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676233EC3376B2345431E13A /* FreshTrackWidget.swift */; };
+		E511D695C33E22515AC5D0FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41E0FA3C02D6B2C3213FE337 /* Assets.xcassets */; };
+		EF1045DC5700AB3C84FDEE13 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC5C8171BF104FC66CB67AA /* StatsView.swift */; };
+		F1BE058924624B6B9D69926F /* ProductRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD421E33C888B86BBAE21B75 /* ProductRowView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0AC461524C0BE02BC07213D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1212747A64C2E3DCF16CC54A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1359AF55B9B218217EA3C54E /* OpenFoodFactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsService.swift; sourceTree = "<group>"; };
+		1CC0F4838E0DB4FA0E81FA47 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2AC120D6F68686CB785AAA60 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		2F6ACBE70DF9EA3E13CE11A3 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		3BC5C8171BF104FC66CB67AA /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		41E0FA3C02D6B2C3213FE337 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		442DAD225A6CDB599247275E /* ProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
+		4519A87896093CD123BF600B /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
+		5607B7C8FCC5D61F3F3BB35C /* ProductStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStore.swift; sourceTree = "<group>"; };
+		5E1795A713A62243E21AEF7F /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		676233EC3376B2345431E13A /* FreshTrackWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshTrackWidget.swift; sourceTree = "<group>"; };
+		6BF825B2415FA7E1FA0C8ADD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		7421D34AB66778BC21F0D78B /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7B32B5CC1B016D43A8EB6E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7D0A32CDE110011744361293 /* FreshTrack.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FreshTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B12F184A9FF5051B33F8797C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B829703DCDB2CF318BFAEAFD /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BC6E215AD31AAD2AFC39F8C0 /* turkish_products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = turkish_products.json; sourceTree = "<group>"; };
+		CBCA694B580FEF65A57AEE68 /* EditProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductView.swift; sourceTree = "<group>"; };
+		E79158189A18EE7BFFD900F6 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
+		F0626F4134AC7CCC2AE48218 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
+		F47BA10703B9ECAEBC87BBB5 /* FreshTrackWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = FreshTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA6C417BA8BA8977C30ECC48 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
+		FD421E33C888B86BBAE21B75 /* ProductRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRowView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		226DE12890250A215FDD7D68 /* FreshTrackWidget */ = {
+			isa = PBXGroup;
+			children = (
+				0AC461524C0BE02BC07213D9 /* Assets.xcassets */,
+				676233EC3376B2345431E13A /* FreshTrackWidget.swift */,
+				1212747A64C2E3DCF16CC54A /* Info.plist */,
+			);
+			path = FreshTrackWidget;
+			sourceTree = "<group>";
+		};
+		37580ADF78B5CACA3ED2949E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5607B7C8FCC5D61F3F3BB35C /* ProductStore.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5D05E6AF6575C21E8E17357D = {
+			isa = PBXGroup;
+			children = (
+				9011EB36903C418666DEDF5B /* FreshTrack */,
+				226DE12890250A215FDD7D68 /* FreshTrackWidget */,
+				AC26EA33DC78579B47EC7A31 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		687E3E0AD0D7854B89C58576 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E79158189A18EE7BFFD900F6 /* AddProductView.swift */,
+				FA6C417BA8BA8977C30ECC48 /* BarcodeScannerView.swift */,
+				CBCA694B580FEF65A57AEE68 /* EditProductView.swift */,
+				6BF825B2415FA7E1FA0C8ADD /* OnboardingView.swift */,
+				442DAD225A6CDB599247275E /* ProductListView.swift */,
+				FD421E33C888B86BBAE21B75 /* ProductRowView.swift */,
+				4519A87896093CD123BF600B /* ShoppingListView.swift */,
+				3BC5C8171BF104FC66CB67AA /* StatsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9011EB36903C418666DEDF5B /* FreshTrack */ = {
+			isa = PBXGroup;
+			children = (
+				5E1795A713A62243E21AEF7F /* App.swift */,
+				41E0FA3C02D6B2C3213FE337 /* Assets.xcassets */,
+				64240FB60A8F5D9C2AD761D3 /* Localizable.strings */,
+				BC6E215AD31AAD2AFC39F8C0 /* turkish_products.json */,
+				F924C64C2AF9DC954F76D7B2 /* Models */,
+				D87042CCF918719A9831A1C5 /* Services */,
+				37580ADF78B5CACA3ED2949E /* ViewModels */,
+				687E3E0AD0D7854B89C58576 /* Views */,
+			);
+			path = FreshTrack;
+			sourceTree = "<group>";
+		};
+		AC26EA33DC78579B47EC7A31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7D0A32CDE110011744361293 /* FreshTrack.app */,
+				F47BA10703B9ECAEBC87BBB5 /* FreshTrackWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D87042CCF918719A9831A1C5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2AC120D6F68686CB785AAA60 /* NotificationService.swift */,
+				1359AF55B9B218217EA3C54E /* OpenFoodFactsService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F924C64C2AF9DC954F76D7B2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F6ACBE70DF9EA3E13CE11A3 /* Product.swift */,
+				F0626F4134AC7CCC2AE48218 /* ShoppingItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29FE9CE33CF7482B118D3DD4 /* FreshTrack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3EEB76D0630FE4267A459F5A /* Build configuration list for PBXNativeTarget "FreshTrack" */;
+			buildPhases = (
+				75D4C8F9066379735E2AE4D7 /* Sources */,
+				9FE4B5062B684E61F7DADCDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FreshTrack;
+			packageProductDependencies = (
+			);
+			productName = FreshTrack;
+			productReference = 7D0A32CDE110011744361293 /* FreshTrack.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B5AF2D908411084D0C380F92 /* FreshTrackWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C8D810357ADD11732868CF0B /* Build configuration list for PBXNativeTarget "FreshTrackWidget" */;
+			buildPhases = (
+				22448CF5FBBEF3D49AB72C3F /* Sources */,
+				24460F0720103B275727E8A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FreshTrackWidget;
+			packageProductDependencies = (
+			);
+			productName = FreshTrackWidget;
+			productReference = F47BA10703B9ECAEBC87BBB5 /* FreshTrackWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA95B1FF65C1B419CC96ABE1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					29FE9CE33CF7482B118D3DD4 = {
+						DevelopmentTeam = 5PY8Q784PU;
+						ProvisioningStyle = Manual;
+					};
+					B5AF2D908411084D0C380F92 = {
+						DevelopmentTeam = 5PY8Q784PU;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 588EC4F9FF4187C1B78D04DF /* Build configuration list for PBXProject "FreshTrack" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				ar,
+				de,
+				en,
+				fr,
+				tr,
+			);
+			mainGroup = 5D05E6AF6575C21E8E17357D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				29FE9CE33CF7482B118D3DD4 /* FreshTrack */,
+				B5AF2D908411084D0C380F92 /* FreshTrackWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		24460F0720103B275727E8A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0027FC895BF28ADDB8C6024D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FE4B5062B684E61F7DADCDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E511D695C33E22515AC5D0FB /* Assets.xcassets in Resources */,
+				C5654435BDEA06C33C22778E /* Localizable.strings in Resources */,
+				7CE0B2570A1C05117DEA2564 /* turkish_products.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		22448CF5FBBEF3D49AB72C3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1C7400D960DF494D58196E1 /* FreshTrackWidget.swift in Sources */,
+				0E4E74014BC1579EA0D7B0B3 /* Product.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75D4C8F9066379735E2AE4D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12A8D682635068B28BA5DB38 /* AddProductView.swift in Sources */,
+				B8723B19091C04EFC2D46BB3 /* App.swift in Sources */,
+				A47774DB39AF72EF9B8FFCD9 /* BarcodeScannerView.swift in Sources */,
+				1F33E4473B8A7D4E7F197728 /* EditProductView.swift in Sources */,
+				8FC0ED91CAA7E735347FC8A8 /* NotificationService.swift in Sources */,
+				DBE2F0D96847C78801F16E67 /* OnboardingView.swift in Sources */,
+				1AEC1B78D1FE99A15E19794F /* OpenFoodFactsService.swift in Sources */,
+				DC0E8DC709AA196E7C2BAD1A /* Product.swift in Sources */,
+				8C3F6712BB623E3531B689FE /* ProductListView.swift in Sources */,
+				F1BE058924624B6B9D69926F /* ProductRowView.swift in Sources */,
+				55A3DAA1EE4FF48C5595991A /* ProductStore.swift in Sources */,
+				BCBE15FD97B69167C771E440 /* ShoppingItem.swift in Sources */,
+				8EB4866E85AC7F570C579097 /* ShoppingListView.swift in Sources */,
+				EF1045DC5700AB3C84FDEE13 /* StatsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		64240FB60A8F5D9C2AD761D3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B829703DCDB2CF318BFAEAFD /* ar */,
+				B12F184A9FF5051B33F8797C /* de */,
+				7B32B5CC1B016D43A8EB6E0D /* en */,
+				1CC0F4838E0DB4FA0E81FA47 /* fr */,
+				7421D34AB66778BC21F0D78B /* tr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		192E64CF1DD4C0FDA54D2240 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		1EE3AB75C1F54E68E0F19DAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 5PY8Q784PU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "FreshKeep uses your camera to scan product barcodes for quick entry.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
+				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		925DF4E920F6F8EA8D86585D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 5PY8Q784PU;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
+				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		9A0B58ED7004AC0649253252 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 5PY8Q784PU;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
+				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C9C153874C4371837B8089B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 5PY8Q784PU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "FreshKeep uses your camera to scan product barcodes for quick entry.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
+				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		DF2C74F81A3D9C8D47EE3145 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3EEB76D0630FE4267A459F5A /* Build configuration list for PBXNativeTarget "FreshTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EE3AB75C1F54E68E0F19DAA /* Debug */,
+				C9C153874C4371837B8089B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		588EC4F9FF4187C1B78D04DF /* Build configuration list for PBXProject "FreshTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF2C74F81A3D9C8D47EE3145 /* Debug */,
+				192E64CF1DD4C0FDA54D2240 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C8D810357ADD11732868CF0B /* Build configuration list for PBXNativeTarget "FreshTrackWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A0B58ED7004AC0649253252 /* Debug */,
+				925DF4E920F6F8EA8D86585D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EA95B1FF65C1B419CC96ABE1 /* Project object */;
+}

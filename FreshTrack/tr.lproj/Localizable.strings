@@ -1,0 +1,95 @@
+/* Genel */
+"Add Product" = "Ürün Ekle";
+"Cancel" = "İptal";
+"Save" = "Kaydet";
+"Delete" = "Sil";
+"Done" = "Tamam";
+"Edit" = "Düzenle";
+
+/* Ana Ekran */
+"FreshTrack" = "FreshKeep";
+"Search products…" = "Ürün ara…";
+"Your fridge is empty" = "Buzdolabın boş";
+"Add products to start tracking\nexpiry dates and reduce waste." = "Son kullanma tarihlerini takip etmek\nve israfı azaltmak için ürün ekle.";
+"Add First Product" = "İlk Ürünü Ekle";
+"Show Used Items (%lld)" = "Kullanılanları Göster (%lld)";
+"Hide Used Items" = "Kullanılanları Gizle";
+"%lld item need attention" = "%lld ürün dikkat istiyor";
+"%lld items need attention" = "%lld ürün dikkat istiyor";
+
+/* Filtreler */
+"All" = "Tümü";
+"Expired" = "Bozulmuş";
+"Expiring Soon" = "Yakında Bitiyor";
+"Fresh" = "Taze";
+
+/* Sıralama */
+"Expiry (Soonest)" = "Son Kullanma (Yakın)";
+"Expiry (Latest)" = "Son Kullanma (Uzak)";
+"Name A–Z" = "İsim A–Z";
+"Recently Added" = "Son Eklenen";
+"Sort by" = "Sırala";
+
+/* Ürün Ekleme */
+"Product" = "Ürün";
+"Product name" = "Ürün adı";
+"Brand (optional)" = "Marka (isteğe bağlı)";
+"Category" = "Kategori";
+"Expiry Date" = "Son Kullanma Tarihi";
+"Expires on" = "Son kullanma";
+"Quantity" = "Miktar";
+"Barcode" = "Barkod";
+"Scan Barcode" = "Barkod Tara";
+"Clear" = "Temizle";
+"Add" = "Ekle";
+"Product not found — enter details manually." = "Ürün bulunamadı — bilgileri elle gir.";
+
+/* Tarayıcı */
+"Point camera at barcode" = "Kamerayı barkoda tut";
+
+/* Durum */
+"Fresh" = "Taze";
+"Expiring Soon" = "Yakında Bitiyor";
+"Expires Today/Tomorrow" = "Bugün/Yarın Bitiyor";
+"Expired" = "Bozulmuş";
+"Expires today" = "Bugün bitiyor";
+"Expires tomorrow" = "Yarın bitiyor";
+"Expires in %lld days" = "%lld günde bitiyor";
+"Expired %lld days ago" = "%lld gün önce bitti";
+"Expired 1 day ago" = "1 gün önce bitti";
+
+/* Swipe işlemleri */
+"Used" = "Kullandım";
+
+/* Kategoriler */
+"Dairy" = "Süt Ürünleri";
+"Meat & Seafood" = "Et & Deniz Ürünleri";
+"Produce" = "Sebze & Meyve";
+"Beverages" = "İçecekler";
+"Condiments & Sauces" = "Sos & Baharat";
+"Grains & Bread" = "Tahıl & Ekmek";
+"Frozen" = "Dondurulmuş";
+"Snacks" = "Atıştırmalık";
+"Other" = "Diğer";
+
+/* İstatistikler */
+"Statistics" = "İstatistikler";
+"Active" = "Aktif";
+"Used" = "Kullanıldı";
+"Expired" = "Bozuldu";
+"Savings Tracker" = "Tasarruf Takibi";
+"Estimated saved" = "Tahmini tasarruf";
+"Estimated wasted" = "Tahmini israf";
+"Based on ~$%lld average item cost" = "Ortalama ~₺%lld ürün maliyetine göre";
+"By Category" = "Kategoriye Göre";
+"Expiry Status" = "Son Kullanma Durumu";
+"Today/Tomorrow" = "Bugün/Yarın";
+"Within 7 days" = "7 gün içinde";
+"Fresh (>7d)" = "Taze (>7g)";
+
+/* Bildirimler */
+"Expiring in 2 days" = "2 gün içinde bitiyor";
+"Expiring tomorrow!" = "Yarın bitiyor!";
+"Expires today!" = "Bugün bitiyor!";
+"Use it up!" = "Kullanmayı unutma!";
+"Don't let it go to waste." = "İsraf etme.";

@@ -1,0 +1,7 @@
+/* English - default, strings match source code */
+"Expires in %lld days" = "Expires in %lld days";
+"Expired %lld days ago" = "Expired %lld days ago";
+"Show Used Items (%lld)" = "Show Used Items (%lld)";
+"%lld item need attention" = "%lld item needs attention";
+"%lld items need attention" = "%lld items need attention";
+"Based on ~$%lld average item cost" = "Based on ~$%lld average item cost";

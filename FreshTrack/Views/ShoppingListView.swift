@@ -1,0 +1,241 @@
+import SwiftUI
+import SwiftData
+
+struct ShoppingListView: View {
+    @Environment(\.modelContext) private var context
+    @Query(sort: \ShoppingItem.addedDate, order: .reverse) private var items: [ShoppingItem]
+
+    @State private var newItemName = ""
+    @State private var selectedItem: ShoppingItem? = nil
+    @State private var showClearConfirm = false
+
+    private var pending: [ShoppingItem] { items.filter { !$0.isBought } }
+    private var bought:  [ShoppingItem] { items.filter {  $0.isBought } }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                // Add new item inline
+                Section {
+                    HStack {
+                        TextField("Add item…", text: $newItemName)
+                            .onSubmit { addManualItem() }
+                        if !newItemName.isEmpty {
+                            Button { addManualItem() } label: {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundStyle(Color.accentColor)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+
+                if pending.isEmpty && bought.isEmpty {
+                    ContentUnavailableView(
+                        "Shopping list is empty",
+                        systemImage: "cart",
+                        description: Text("Expired or consumed products will appear here automatically.")
+                    )
+                    .listRowBackground(Color.clear)
+                } else {
+                    // --- To Buy ---
+                    if !pending.isEmpty {
+                        Section("To Buy (\(pending.count))") {
+                            ForEach(pending) { item in
+                                ShoppingRowView(item: item) {
+                                    selectedItem = item       // open date picker sheet
+                                }
+                            }
+                            .onDelete { deleteItems($0, from: pending) }
+                        }
+                    }
+
+                    // --- Bought / Added to fridge ---
+                    if !bought.isEmpty {
+                        Section("Added to Fridge (\(bought.count))") {
+                            ForEach(bought) { item in
+                                HStack {
+                                    Text(item.category.icon)
+                                    VStack(alignment: .leading, spacing: 1) {
+                                        Text(item.name)
+                                            .strikethrough()
+                                            .foregroundStyle(.secondary)
+                                        Text("Added to fridge")
+                                            .font(.caption2)
+                                            .foregroundStyle(.teal)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "refrigerator")
+                                        .foregroundStyle(.teal)
+                                }
+                            }
+                            .onDelete { deleteItems($0, from: bought) }
+
+                            Button(role: .destructive) {
+                                showClearConfirm = true
+                            } label: {
+                                Label("Clear All Items", systemImage: "trash")
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Shopping List")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                if !items.isEmpty {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showClearConfirm = true
+                        } label: {
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                        }
+                    }
+                }
+            }
+            .confirmationDialog(
+                "Clear Shopping List",
+                isPresented: $showClearConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Delete All Items", role: .destructive) {
+                    withAnimation { items.forEach { context.delete($0) } }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will permanently delete all \(items.count) items from your shopping list.")
+            }
+            .sheet(item: $selectedItem) { item in
+                AddToFridgeSheet(item: item) { expiryDate in
+                    addToFridge(item: item, expiryDate: expiryDate)
+                }
+            }
+        }
+    }
+
+    // MARK: - Actions
+
+    private func addManualItem() {
+        let name = newItemName.trimmingCharacters(in: .whitespaces)
+        guard !name.isEmpty else { return }
+        context.insert(ShoppingItem(name: name))
+        newItemName = ""
+    }
+
+    private func deleteItems(_ offsets: IndexSet, from list: [ShoppingItem]) {
+        offsets.forEach { context.delete(list[$0]) }
+    }
+
+    private func addToFridge(item: ShoppingItem, expiryDate: Date) {
+        let product = Product(
+            name: item.name,
+            category: item.category,
+            expiryDate: expiryDate
+        )
+        context.insert(product)
+        NotificationService.shared.scheduleNotifications(for: product)
+        context.delete(item)
+        selectedItem = nil
+    }
+}
+
+// MARK: - Add To Fridge Sheet
+
+private struct AddToFridgeSheet: View {
+    let item: ShoppingItem
+    let onConfirm: (Date) -> Void
+
+    @Environment(\.dismiss) private var dismiss
+    @State private var expiryDate = Calendar.current.date(byAdding: .day, value: 7, to: Date()) ?? Date()
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    HStack(spacing: 12) {
+                        Text(item.category.icon)
+                            .font(.largeTitle)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(item.name)
+                                .font(.headline)
+                            Text(item.category.rawValue)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+
+                Section("Expiry Date") {
+                    DatePicker(
+                        "Expires on",
+                        selection: $expiryDate,
+                        in: Date()...,
+                        displayedComponents: .date
+                    )
+                    .datePickerStyle(.graphical)
+                    .tint(.teal)
+
+                    HStack(spacing: 8) {
+                        ForEach([3, 7, 14, 30], id: \.self) { days in
+                            Button("+\(days)d") {
+                                expiryDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.small)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Add to Fridge")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        onConfirm(expiryDate)
+                    } label: {
+                        Label("Add to Fridge", systemImage: "refrigerator")
+                            .fontWeight(.semibold)
+                    }
+                    .tint(.teal)
+                }
+            }
+        }
+        .presentationDetents([.medium])
+    }
+}
+
+// MARK: - Row
+
+private struct ShoppingRowView: View {
+    let item: ShoppingItem
+    let onTap: () -> Void
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: 12) {
+                Image(systemName: "circle")
+                    .foregroundStyle(Color.accentColor)
+                    .font(.title3)
+
+                Text(item.category.icon)
+                Text(item.name)
+                    .foregroundStyle(.primary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+#Preview {
+    ShoppingListView()
+        .modelContainer(for: [ShoppingItem.self, Product.self], inMemory: true)
+}

@@ -56,33 +56,73 @@ final class ProductStore: ObservableObject {
 
     func markConsumed(_ product: Product, context: ModelContext) {
         if product.quantity > 1 {
-            // Decrease by 1, keep product active
             product.quantity -= 1
         } else {
-            // Last one — mark consumed and add to shopping list
             product.isConsumed = true
+            product.consumedDate = Date()
             NotificationService.shared.cancelNotifications(for: product)
-            addToShoppingList(product, context: context)
+            let existing = (try? context.fetch(FetchDescriptor<ShoppingItem>())) ?? []
+            if !existing.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) {
+                context.insert(ShoppingItem(name: product.name, category: product.category))
+            }
         }
     }
 
+    func incrementQuantity(_ product: Product) {
+        product.quantity = min(product.quantity + 1, 99)
+    }
+
     func delete(_ product: Product, context: ModelContext) {
+        if !product.isConsumed && product.expiryStatus == .expired {
+            let count = UserDefaults.standard.integer(forKey: "archivedWastedCount")
+            UserDefaults.standard.set(count + 1, forKey: "archivedWastedCount")
+            let price = product.price ?? localAvgCost
+            let money = UserDefaults.standard.double(forKey: "archivedWastedMoney")
+            UserDefaults.standard.set(money + price, forKey: "archivedWastedMoney")
+            if product.price == nil {
+                UserDefaults.standard.set(true, forKey: "archivedWastedHasEstimates")
+            }
+        }
         NotificationService.shared.cancelNotifications(for: product)
         context.delete(product)
     }
 
-    func addToShoppingList(_ product: Product, context: ModelContext) {
-        // Avoid duplicates — only add if not already in list (not bought yet)
-        let name = product.name
-        let item = ShoppingItem(name: name, category: product.category)
-        context.insert(item)
+    private var localAvgCost: Double {
+        switch Locale.current.language.languageCode?.identifier ?? "en" {
+        case "tr": return 50.0
+        case "de", "fr": return 3.0
+        case "ar": return 15.0
+        default: return 4.0
+        }
     }
 
-    /// Called on app launch — auto-adds expired products to shopping list if not already there
-    func syncExpiredToShoppingList(products: [Product], shoppingItems: [ShoppingItem], context: ModelContext) {
+    /// Sadece sepete ekle, miktara dokunma. Swipe aksiyonu için kullanılır.
+    func addToShoppingListOnly(_ product: Product, context: ModelContext, allItems: [ShoppingItem]) {
+        guard !allItems.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) else { return }
+        context.insert(ShoppingItem(name: product.name, category: product.category))
+    }
+
+    /// Auto-deletes consumed items older than 30 days
+    func purgeOldConsumed(products: [Product], context: ModelContext) {
+        let cutoff = Calendar.current.date(byAdding: .day, value: -30, to: Date()) ?? Date()
+        let old = products.filter { $0.isConsumed && ($0.consumedDate ?? $0.addedDate) < cutoff }
+        for product in old {
+            context.delete(product)
+        }
+    }
+
+    /// Returns expired products that are not already in the shopping list
+    func expiredProductsNotInList(products: [Product], shoppingItems: [ShoppingItem]) -> [Product] {
         let pendingNames = Set(shoppingItems.filter { !$0.isBought }.map { $0.name.lowercased() })
         let expired = products.filter { !$0.isConsumed && $0.expiryStatus == .expired }
-        for product in expired where !pendingNames.contains(product.name.lowercased()) {
+        return expired.filter { !pendingNames.contains($0.name.lowercased()) }
+    }
+
+    /// Adds given expired products to the shopping list (called after user confirmation)
+    func addExpiredToShoppingList(_ products: [Product], context: ModelContext) {
+        let existing = (try? context.fetch(FetchDescriptor<ShoppingItem>())) ?? []
+        for product in products {
+            guard !existing.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) else { continue }
             context.insert(ShoppingItem(name: product.name, category: product.category))
         }
     }

@@ -10,7 +10,6 @@ struct ShoppingListView: View {
     @State private var showClearConfirm = false
 
     private var pending: [ShoppingItem] { items.filter { !$0.isBought } }
-    private var bought:  [ShoppingItem] { items.filter {  $0.isBought } }
 
     var body: some View {
         NavigationStack {
@@ -30,60 +29,28 @@ struct ShoppingListView: View {
                     }
                 }
 
-                if pending.isEmpty && bought.isEmpty {
+                if pending.isEmpty {
                     ContentUnavailableView(
                         "Shopping list is empty",
                         systemImage: "cart",
-                        description: Text("Expired or consumed products will appear here automatically.")
+                        description: Text("Consumed or expired products appear here automatically.")
                     )
                     .listRowBackground(Color.clear)
                 } else {
-                    // --- To Buy ---
-                    if !pending.isEmpty {
-                        Section("To Buy (\(pending.count))") {
-                            ForEach(pending) { item in
-                                ShoppingRowView(item: item) {
-                                    selectedItem = item       // open date picker sheet
-                                }
-                            }
-                            .onDelete { deleteItems($0, from: pending) }
-                        }
-                    }
-
-                    // --- Bought / Added to fridge ---
-                    if !bought.isEmpty {
-                        Section("Added to Fridge (\(bought.count))") {
-                            ForEach(bought) { item in
-                                HStack {
-                                    Text(item.category.icon)
-                                    VStack(alignment: .leading, spacing: 1) {
-                                        Text(item.name)
-                                            .strikethrough()
-                                            .foregroundStyle(.secondary)
-                                        Text("Added to fridge")
-                                            .font(.caption2)
-                                            .foregroundStyle(.teal)
-                                    }
-                                    Spacer()
-                                    Image(systemName: "refrigerator")
-                                        .foregroundStyle(.teal)
-                                }
-                            }
-                            .onDelete { deleteItems($0, from: bought) }
-
-                            Button(role: .destructive) {
-                                showClearConfirm = true
-                            } label: {
-                                Label("Clear All Items", systemImage: "trash")
+                    Section("To Buy (\(pending.count))") {
+                        ForEach(pending) { item in
+                            ShoppingRowView(item: item) {
+                                selectedItem = item
                             }
                         }
+                        .onDelete { deleteItems($0, from: pending) }
                     }
                 }
             }
             .navigationTitle("Shopping List")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                if !items.isEmpty {
+                if !pending.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             showClearConfirm = true
@@ -100,11 +67,11 @@ struct ShoppingListView: View {
                 titleVisibility: .visible
             ) {
                 Button("Delete All Items", role: .destructive) {
-                    withAnimation { items.forEach { context.delete($0) } }
+                    withAnimation { pending.forEach { context.delete($0) } }
                 }
                 Button("Cancel", role: .cancel) {}
             } message: {
-                Text("This will permanently delete all \(items.count) items from your shopping list.")
+                Text("This will permanently delete all \(pending.count) items.")
             }
             .sheet(item: $selectedItem) { item in
                 AddToFridgeSheet(item: item) { expiryDate in
@@ -119,6 +86,10 @@ struct ShoppingListView: View {
     private func addManualItem() {
         let name = newItemName.trimmingCharacters(in: .whitespaces)
         guard !name.isEmpty else { return }
+        let alreadyExists = items.contains {
+            !$0.isBought && $0.name.lowercased() == name.lowercased()
+        }
+        guard !alreadyExists else { newItemName = ""; return }
         context.insert(ShoppingItem(name: name))
         newItemName = ""
     }
@@ -154,28 +125,19 @@ private struct AddToFridgeSheet: View {
             Form {
                 Section {
                     HStack(spacing: 12) {
-                        Text(item.category.icon)
-                            .font(.largeTitle)
+                        Text(item.category.icon).font(.largeTitle)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(item.name)
-                                .font(.headline)
-                            Text(item.category.rawValue)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            Text(item.name).font(.headline)
+                            Text(item.category.rawValue).font(.caption).foregroundStyle(.secondary)
                         }
                     }
                     .padding(.vertical, 4)
                 }
 
                 Section("Expiry Date") {
-                    DatePicker(
-                        "Expires on",
-                        selection: $expiryDate,
-                        in: Date()...,
-                        displayedComponents: .date
-                    )
-                    .datePickerStyle(.graphical)
-                    .tint(.teal)
+                    DatePicker("Expires on", selection: $expiryDate, in: Date()..., displayedComponents: .date)
+                        .datePickerStyle(.graphical)
+                        .tint(.teal)
 
                     HStack(spacing: 8) {
                         ForEach([3, 7, 14, 30], id: \.self) { days in
@@ -198,8 +160,7 @@ private struct AddToFridgeSheet: View {
                     Button {
                         onConfirm(expiryDate)
                     } label: {
-                        Label("Add to Fridge", systemImage: "refrigerator")
-                            .fontWeight(.semibold)
+                        Label("Add to Fridge", systemImage: "refrigerator").fontWeight(.semibold)
                     }
                     .tint(.teal)
                 }
@@ -221,14 +182,10 @@ private struct ShoppingRowView: View {
                 Image(systemName: "circle")
                     .foregroundStyle(Color.accentColor)
                     .font(.title3)
-
                 Text(item.category.icon)
-                Text(item.name)
-                    .foregroundStyle(.primary)
+                Text(item.name).foregroundStyle(.primary)
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
+                Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
             }
         }
         .buttonStyle(.plain)

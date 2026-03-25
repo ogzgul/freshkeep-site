@@ -26,7 +26,7 @@ struct OnboardingView: View {
         OnboardingPage(
             icon: "🧺",
             title: "Shopping List Built-In",
-            description: "Swipe any product left and tap 🛒 to add it to your shopping list. Restock what you've used in one tap.",
+            description: "Consumed or expired products are added to your shopping list automatically. You can also swipe any product left to add it manually.",
             accentColor: .purple
         ),
         OnboardingPage(

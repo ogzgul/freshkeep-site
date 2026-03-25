@@ -113,44 +113,96 @@ struct BarcodeScannerSheet: View {
     var onScan: (String) -> Void
 
     @State private var isActive = true
+    @State private var cameraAuthorized: Bool? = nil
 
     var body: some View {
         ZStack {
-            BarcodeScannerView(onScan: { code in
-                onScan(code)
-                isPresented = false
-            }, isActive: $isActive)
-            .ignoresSafeArea()
+            Color.black.ignoresSafeArea()
 
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        isActive = false
-                        isPresented = false
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title)
-                            .foregroundStyle(.white)
-                            .shadow(radius: 4)
+            if cameraAuthorized == true {
+                BarcodeScannerView(onScan: { code in
+                    onScan(code)
+                    isPresented = false
+                }, isActive: $isActive)
+                .ignoresSafeArea()
+
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button {
+                            isActive = false
+                            isPresented = false
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.title)
+                                .foregroundStyle(.white)
+                                .shadow(radius: 4)
+                        }
+                        .padding()
                     }
-                    .padding()
+
+                    Spacer()
+
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.white, lineWidth: 2)
+                        .frame(width: 260, height: 160)
+                        .padding(.bottom, 80)
+
+                    Text("Point camera at barcode")
+                        .foregroundStyle(.white)
+                        .font(.subheadline)
+                        .padding(.bottom, 40)
+                        .shadow(radius: 4)
                 }
+            } else if cameraAuthorized == false {
+                VStack(spacing: 20) {
+                    Image(systemName: "camera.fill")
+                        .font(.system(size: 52))
+                        .foregroundStyle(.secondary)
 
-                Spacer()
+                    Text("Camera Access Required")
+                        .font(.title3).fontWeight(.semibold)
+                        .foregroundStyle(.white)
 
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.white, lineWidth: 2)
-                    .frame(width: 260, height: 160)
-                    .padding(.bottom, 80)
+                    Text("Please allow camera access in\nSettings to scan barcodes.")
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.secondary)
 
-                Text("Point camera at barcode")
-                    .foregroundStyle(.white)
-                    .font(.subheadline)
-                    .padding(.bottom, 40)
-                    .shadow(radius: 4)
+                    Button {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        Text("Open Settings")
+                            .fontWeight(.semibold)
+                            .padding(.horizontal, 28).padding(.vertical, 12)
+                            .background(.teal, in: RoundedRectangle(cornerRadius: 12))
+                            .foregroundStyle(.white)
+                    }
+
+                    Button("Cancel") { isPresented = false }
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                }
+                .padding(32)
             }
         }
+        .onAppear { checkCameraPermission() }
         .onDisappear { isActive = false }
+    }
+
+    private func checkCameraPermission() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            cameraAuthorized = true
+        case .denied, .restricted:
+            cameraAuthorized = false
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async { cameraAuthorized = granted }
+            }
+        @unknown default:
+            cameraAuthorized = false
+        }
     }
 }

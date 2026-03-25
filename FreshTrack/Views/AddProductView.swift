@@ -19,6 +19,8 @@ struct AddProductView: View {
     @State private var quantity: Int = 1
     @State private var barcode: String? = nil
     @State private var priceText: String = ""
+    @State private var notes: String = ""
+    @State private var hasCustomDate = false
 
     @State private var showScanner = false
     @State private var isLookingUp = false
@@ -27,27 +29,21 @@ struct AddProductView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // Product info
                 Section("Product") {
                     HStack {
                         TextField("Product name", text: $name)
                         if isLookingUp {
-                            ProgressView()
-                                .scaleEffect(0.8)
+                            ProgressView().scaleEffect(0.8)
                         }
                     }
-
                     TextField("Brand (optional)", text: $brand)
-
                     Picker("Category", selection: $category) {
                         ForEach(ProductCategory.allCases, id: \.self) { cat in
-                            Label(cat.rawValue, systemImage: "")
-                                .tag(cat)
+                            Label(cat.rawValue, systemImage: "").tag(cat)
                         }
                     }
                 }
 
-                // Expiry
                 Section("Expiry Date") {
                     DatePicker(
                         "Expires on",
@@ -55,46 +51,49 @@ struct AddProductView: View {
                         in: Calendar.current.date(byAdding: .day, value: -365, to: Date())!...,
                         displayedComponents: .date
                     )
+                    .onChange(of: expiryDate) { _, _ in hasCustomDate = true }
 
                     HStack(spacing: 8) {
                         ForEach([3, 7, 14, 30], id: \.self) { days in
                             Button("+\(days)d") {
                                 expiryDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
+                                hasCustomDate = true
                             }
                             .buttonStyle(.bordered)
                             .controlSize(.small)
                         }
                     }
-                }
 
-                // Price
-                Section("Price (optional)") {
-                    HStack {
-                        Text(currencySymbol)
-                            .foregroundStyle(.secondary)
-                        TextField("0.00", text: $priceText)
-                            .keyboardType(.decimalPad)
+                    if !hasCustomDate {
+                        Text("Suggested based on category")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
                     }
                 }
 
-                // Quantity
+                Section("Price (optional)") {
+                    HStack {
+                        Text(currencySymbol).foregroundStyle(.secondary)
+                        TextField("0.00", text: $priceText).keyboardType(.decimalPad)
+                    }
+                }
+
                 Section("Quantity") {
                     Stepper("Qty: \(quantity)", value: $quantity, in: 1...99)
                 }
 
-                // Barcode
+                Section("Notes (optional)") {
+                    TextField("Storage location, usage tips…", text: $notes, axis: .vertical)
+                        .lineLimit(3...6)
+                }
+
                 Section("Barcode") {
                     if let bc = barcode {
                         HStack {
-                            Image(systemName: "barcode")
-                                .foregroundStyle(.secondary)
-                            Text(bc)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            Image(systemName: "barcode").foregroundStyle(.secondary)
+                            Text(bc).font(.caption).foregroundStyle(.secondary)
                             Spacer()
-                            Button("Clear") { barcode = nil }
-                                .foregroundStyle(.red)
-                                .font(.caption)
+                            Button("Clear") { barcode = nil }.foregroundStyle(.red).font(.caption)
                         }
                     } else {
                         Button {
@@ -103,11 +102,8 @@ struct AddProductView: View {
                             Label("Scan Barcode", systemImage: "barcode.viewfinder")
                         }
                     }
-
                     if let err = lookupError {
-                        Text(err)
-                            .font(.caption)
-                            .foregroundStyle(.orange)
+                        Text(err).font(.caption).foregroundStyle(.orange)
                     }
                 }
             }
@@ -129,13 +125,36 @@ struct AddProductView: View {
                     Task { await lookupBarcode(code) }
                 }
             }
+            .onChange(of: category) { _, newCategory in
+                guard !hasCustomDate else { return }
+                expiryDate = defaultExpiry(for: newCategory)
+            }
             .onAppear {
-                if let pName = prefillName    { name     = pName }
-                if let pBrand = prefillBrand  { brand    = pBrand }
-                if let pCat   = prefillCategory { category = pCat }
-                if let pBC    = prefillBarcode  { barcode  = pBC }
+                if let pName = prefillName     { name     = pName }
+                if let pBrand = prefillBrand   { brand    = pBrand }
+                if let pCat = prefillCategory  { category = pCat }
+                if let pBC = prefillBarcode    { barcode  = pBC }
+                expiryDate = defaultExpiry(for: category)
             }
         }
+    }
+
+    // MARK: - Default expiry by category
+
+    private func defaultExpiry(for category: ProductCategory) -> Date {
+        let days: Int
+        switch category {
+        case .dairy:      days = 7
+        case .meat:       days = 3
+        case .produce:    days = 5
+        case .beverages:  days = 30
+        case .condiments: days = 180
+        case .grains:     days = 180
+        case .frozen:     days = 90
+        case .snacks:     days = 30
+        case .other:      days = 7
+        }
+        return Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
     }
 
     // MARK: - Helpers
@@ -155,9 +174,7 @@ struct AddProductView: View {
     private func save() {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }
-
         let parsedPrice = Double(priceText.replacingOccurrences(of: ",", with: "."))
-
         let product = Product(
             name: trimmed,
             brand: brand.trimmingCharacters(in: .whitespaces),
@@ -165,7 +182,8 @@ struct AddProductView: View {
             expiryDate: expiryDate,
             barcode: barcode,
             quantity: quantity,
-            price: parsedPrice
+            price: parsedPrice,
+            notes: notes.trimmingCharacters(in: .whitespacesAndNewlines)
         )
         store.add(product, context: context)
         dismiss()
@@ -174,10 +192,9 @@ struct AddProductView: View {
     private func lookupBarcode(_ code: String) async {
         isLookingUp = true
         lookupError = nil
-
         if let result = await OpenFoodFactsService.shared.lookup(barcode: code) {
             await MainActor.run {
-                if name.isEmpty { name = result.name }
+                if name.isEmpty  { name  = result.name }
                 if brand.isEmpty { brand = result.brand }
                 category = result.category
             }
@@ -186,7 +203,6 @@ struct AddProductView: View {
                 lookupError = "Product not found — enter details manually."
             }
         }
-
         isLookingUp = false
     }
 }

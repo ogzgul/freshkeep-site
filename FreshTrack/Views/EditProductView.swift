@@ -13,6 +13,8 @@ struct EditProductView: View {
     @State private var expiryDate: Date
     @State private var quantity: Int
     @State private var priceText: String
+    @State private var notes: String
+    @State private var showDeleteConfirm = false
 
     init(product: Product) {
         self.product = product
@@ -22,6 +24,7 @@ struct EditProductView: View {
         _expiryDate = State(initialValue: product.expiryDate)
         _quantity   = State(initialValue: product.quantity)
         _priceText  = State(initialValue: product.price.map { String($0) } ?? "")
+        _notes      = State(initialValue: product.notes)
     }
 
     var body: some View {
@@ -65,6 +68,23 @@ struct EditProductView: View {
                 Section("Quantity") {
                     Stepper("Qty: \(quantity)", value: $quantity, in: 1...99)
                 }
+
+                Section("Notes (optional)") {
+                    TextField("Storage location, usage tips…", text: $notes, axis: .vertical)
+                        .lineLimit(3...6)
+                }
+
+                Section {
+                    Button(role: .destructive) {
+                        showDeleteConfirm = true
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Label("Delete Product", systemImage: "trash")
+                            Spacer()
+                        }
+                    }
+                }
             }
             .navigationTitle("Edit Product")
             .navigationBarTitleDisplayMode(.inline)
@@ -77,6 +97,20 @@ struct EditProductView: View {
                         .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
                         .fontWeight(.semibold)
                 }
+            }
+            .confirmationDialog(
+                "Delete \"\(product.name)\"?",
+                isPresented: $showDeleteConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Delete Product", role: .destructive) {
+                    NotificationService.shared.cancelNotifications(for: product)
+                    context.delete(product)
+                    dismiss()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will permanently remove the product from your fridge.")
             }
         }
     }
@@ -101,8 +135,8 @@ struct EditProductView: View {
         product.expiryDate = expiryDate
         product.quantity   = quantity
         product.price      = Double(priceText.replacingOccurrences(of: ",", with: "."))
+        product.notes      = notes.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // Reschedule notifications with updated date
         NotificationService.shared.cancelNotifications(for: product)
         NotificationService.shared.scheduleNotifications(for: product)
 

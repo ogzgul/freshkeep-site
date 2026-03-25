@@ -358,7 +358,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -372,7 +372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -386,7 +386,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -396,7 +396,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -410,7 +410,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -420,7 +420,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -436,7 +436,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -450,7 +450,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;

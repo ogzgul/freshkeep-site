@@ -12,19 +12,20 @@ struct ProductListView: View {
 
     @State private var showAddProduct = false
     @State private var showStats = false
+    @State private var showSettings = false
     @State private var sortOption: SortOption = .expiryAsc
     @State private var filterOption: FilterOption = .all
     @State private var searchText = ""
-    @State private var showConsumed = false
     @State private var showShoppingList = false
     @State private var editingProduct: Product? = nil
-    @State private var reAddingProduct: Product? = nil
+    @State private var expiredForAlert: [Product] = []
+    @State private var toastMessage: String? = nil
 
     @AppStorage("consumedCount") private var consumedCount = 0
     @AppStorage("reviewRequested") private var reviewRequested = false
+    @AppStorage("notificationHour") private var notificationHour = 9
 
     private var activeProducts: [Product] { allProducts.filter { !$0.isConsumed } }
-    private var consumedProducts: [Product] { allProducts.filter { $0.isConsumed } }
 
     private var filteredProducts: [Product] {
         let sorted = store.sorted(allProducts, by: sortOption, filter: filterOption)
@@ -39,7 +40,6 @@ struct ProductListView: View {
 
     var body: some View {
         NavigationStack {
-            // Always show list (empty state lives inside list now)
             mainList
             .navigationTitle("FreshKeep")
             .searchable(text: $searchText, prompt: "Search products…")
@@ -48,17 +48,46 @@ struct ProductListView: View {
             .sheet(isPresented: $showStats) { StatsView() }
             .sheet(isPresented: $showShoppingList) { ShoppingListView() }
             .sheet(item: $editingProduct) { EditProductView(product: $0) }
-            .sheet(item: $reAddingProduct) { product in
-                ReAddSheet(product: product) { expiryDate in
-                    reAddToFridge(product, expiryDate: expiryDate)
+            .sheet(isPresented: $showSettings) { SettingsSheet(notificationHour: $notificationHour) }
+            .alert("Expired Products", isPresented: Binding(
+                get: { !expiredForAlert.isEmpty },
+                set: { if !$0 { expiredForAlert = [] } }
+            )) {
+                Button("Add to Shopping List") {
+                    store.addExpiredToShoppingList(expiredForAlert, context: context)
+                    expiredForAlert = []
                 }
+                Button("Dismiss", role: .cancel) {
+                    expiredForAlert = []
+                }
+            } message: {
+                let count = expiredForAlert.count
+                let names = expiredForAlert.prefix(3).map { $0.name }.joined(separator: ", ")
+                let suffix = count > 3 ? " and \(count - 3) more" : ""
+                Text("\(count) product\(count == 1 ? "" : "s") \(count == 1 ? "has" : "have") expired: \(names)\(suffix).\n\nWould you like to add \(count == 1 ? "it" : "them") to your shopping list?")
             }
             .onAppear {
-                store.syncExpiredToShoppingList(
+                store.purgeOldConsumed(products: allProducts, context: context)
+                let expired = store.expiredProductsNotInList(
                     products: allProducts,
-                    shoppingItems: allShoppingItems,
-                    context: context
+                    shoppingItems: allShoppingItems
                 )
+                if !expired.isEmpty { expiredForAlert = expired }
+            }
+            .onChange(of: notificationHour) { _, _ in
+                NotificationService.shared.rescheduleAll(products: allProducts)
+            }
+            .overlay(alignment: .bottom) {
+                if let msg = toastMessage {
+                    Text(msg)
+                        .font(.subheadline).fontWeight(.medium)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 20).padding(.vertical, 10)
+                        .background(.teal.gradient, in: Capsule())
+                        .padding(.bottom, 24)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .id(msg)
+                }
             }
         }
     }
@@ -67,14 +96,12 @@ struct ProductListView: View {
 
     private var mainList: some View {
         List {
-            // Alert banner
             if stats.alertCount > 0 {
                 AlertBannerView(count: stats.alertCount)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
 
-            // Filter chips
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(FilterOption.allCases, id: \.self) { opt in
@@ -88,7 +115,6 @@ struct ProductListView: View {
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0))
 
-            // Active products or empty state
             if activeProducts.isEmpty {
                 EmptyStateRow { showAddProduct = true }
                     .listRowBackground(Color.clear)
@@ -103,42 +129,23 @@ struct ProductListView: View {
                         ProductRowView(
                             product: product,
                             onConsume: {
+                                let wasLast = product.quantity == 1
                                 store.markConsumed(product, context: context)
                                 consumedCount += 1
                                 maybeRequestReview()
+                                if wasLast { showToast("Added to shopping list") }
                             },
+                            onIncrement: { store.incrementQuantity(product) },
                             onDelete: { store.delete(product, context: context) },
-                            onEdit:   { editingProduct = product }
+                            onEdit: { editingProduct = product },
+                            onAddToShoppingList: {
+                                let wasLast = product.quantity == 1
+                                store.markConsumed(product, context: context)
+                                consumedCount += 1
+                                maybeRequestReview()
+                                if wasLast { showToast("Added to shopping list") }
+                            }
                         )
-                    }
-                }
-            }
-
-            // Used Items — always visible
-            Section {
-                Button {
-                    withAnimation { showConsumed.toggle() }
-                } label: {
-                    HStack {
-                        Image(systemName: showConsumed ? "chevron.up" : "chevron.down")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text(consumedProducts.isEmpty
-                             ? "No used items yet"
-                             : (showConsumed ? "Hide Used Items" : "Used Items (\(consumedProducts.count))"))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .disabled(consumedProducts.isEmpty)
-
-                if showConsumed {
-                    ForEach(consumedProducts) { product in
-                        UsedItemRow(product: product) {
-                            reAddingProduct = product
-                        } onRemove: {
-                            context.delete(product)
-                        }
                     }
                 }
             }
@@ -146,6 +153,15 @@ struct ProductListView: View {
         .listStyle(.insetGrouped)
         .animation(.default, value: filterOption)
         .animation(.default, value: sortOption)
+    }
+
+    // MARK: - Toast
+
+    private func showToast(_ message: String) {
+        withAnimation(.spring(duration: 0.4)) { toastMessage = message }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
+            withAnimation(.easeOut(duration: 0.3)) { toastMessage = nil }
+        }
     }
 
     // MARK: - Review
@@ -158,29 +174,6 @@ struct ProductListView: View {
         }
     }
 
-    // MARK: - Re-add to fridge (smart date)
-
-    private func reAddToFridge(_ product: Product, expiryDate: Date) {
-        let newProduct = Product(
-            name: product.name,
-            brand: product.brand,
-            category: product.category,
-            expiryDate: expiryDate,
-            barcode: product.barcode,
-            quantity: 1,
-            price: product.price
-        )
-        store.add(newProduct, context: context)
-        context.delete(product)
-        reAddingProduct = nil
-    }
-
-    private func suggestedExpiryDate(for product: Product) -> Date {
-        let calendar = Calendar.current
-        let originalDays = calendar.dateComponents([.day], from: product.addedDate, to: product.expiryDate).day ?? 7
-        return calendar.date(byAdding: .day, value: max(originalDays, 1), to: Date()) ?? Date()
-    }
-
     // MARK: - Toolbar
 
     @ToolbarContentBuilder
@@ -190,7 +183,6 @@ struct ProductListView: View {
                 Button { showStats = true } label: {
                     Image(systemName: "chart.bar")
                 }
-                // Cart with badge
                 Button { showShoppingList = true } label: {
                     let count = allShoppingItems.filter { !$0.isBought }.count
                     ZStack(alignment: .topTrailing) {
@@ -208,6 +200,12 @@ struct ProductListView: View {
                         }
                     }
                 }
+            }
+        }
+
+        ToolbarItem(placement: .topBarTrailing) {
+            Button { showSettings = true } label: {
+                Image(systemName: "gearshape")
             }
         }
 
@@ -239,130 +237,47 @@ struct ProductListView: View {
     }
 }
 
-// MARK: - Re-Add Sheet
+// MARK: - Settings Sheet
 
-private struct ReAddSheet: View {
-    let product: Product
-    let onConfirm: (Date) -> Void
-
+private struct SettingsSheet: View {
+    @Binding var notificationHour: Int
     @Environment(\.dismiss) private var dismiss
-    @State private var expiryDate: Date
 
-    init(product: Product, onConfirm: @escaping (Date) -> Void) {
-        self.product = product
-        self.onConfirm = onConfirm
-        let calendar = Calendar.current
-        let originalDays = calendar.dateComponents([.day], from: product.addedDate, to: product.expiryDate).day ?? 7
-        let suggested = calendar.date(byAdding: .day, value: max(originalDays, 1), to: Date()) ?? Date()
-        _expiryDate = State(initialValue: suggested)
-    }
+    private let hours = [6, 7, 8, 9, 10, 11, 12, 18, 20, 21]
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    HStack(spacing: 12) {
-                        Text(product.category.icon)
-                            .font(.largeTitle)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(product.name)
-                                .font(.headline)
-                            if !product.brand.isEmpty {
-                                Text(product.brand)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Text(product.category.rawValue)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                    Picker("Reminder Time", selection: $notificationHour) {
+                        ForEach(hours, id: \.self) { hour in
+                            Text(hourLabel(hour)).tag(hour)
                         }
                     }
-                    .padding(.vertical, 4)
-                }
-
-                Section("Expiry Date") {
-                    DatePicker(
-                        "Expires on",
-                        selection: $expiryDate,
-                        in: Date()...,
-                        displayedComponents: .date
-                    )
-                    .datePickerStyle(.graphical)
-                    .tint(.teal)
-
-                    HStack(spacing: 8) {
-                        ForEach([3, 7, 14, 30], id: \.self) { days in
-                            Button("+\(days)d") {
-                                expiryDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
-                            }
-                            .buttonStyle(.bordered)
-                            .controlSize(.small)
-                        }
-                    }
+                    .pickerStyle(.wheel)
+                } header: {
+                    Text("Daily Reminder Time")
+                } footer: {
+                    Text("You'll be notified at this time 2 days before, 1 day before, and on the expiry day.")
                 }
             }
-            .navigationTitle("Add to Fridge")
+            .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
-                }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        onConfirm(expiryDate)
-                        dismiss()
-                    } label: {
-                        Label("Add to Fridge", systemImage: "refrigerator")
-                            .fontWeight(.semibold)
-                    }
-                    .tint(.teal)
+                    Button("Done") { dismiss() }
+                        .fontWeight(.semibold)
                 }
             }
         }
         .presentationDetents([.medium])
     }
-}
 
-// MARK: - Used Item Row
-
-private struct UsedItemRow: View {
-    let product: Product
-    let onReAdd: () -> Void
-    let onRemove: () -> Void
-
-    var body: some View {
-        HStack(spacing: 10) {
-            Text(product.category.icon)
-            VStack(alignment: .leading, spacing: 1) {
-                Text(product.name)
-                    .foregroundStyle(.secondary)
-                    .strikethrough()
-                    .lineLimit(1)
-                Text("Used \(product.originalDuration) ago")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
-            }
-            Spacer()
-            Button {
-                withAnimation { onReAdd() }
-            } label: {
-                Label("Re-add", systemImage: "arrow.counterclockwise")
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundStyle(.teal)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(.teal.opacity(0.12), in: Capsule())
-            }
-            .buttonStyle(.plain)
-        }
-        .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                onRemove()
-            } label: {
-                Label("Remove", systemImage: "trash")
-            }
-        }
+    private func hourLabel(_ hour: Int) -> String {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "h:00 a"
+        let date = Calendar.current.date(bySettingHour: hour, minute: 0, second: 0, of: Date()) ?? Date()
+        return fmt.string(from: date)
     }
 }
 

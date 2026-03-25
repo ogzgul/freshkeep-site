@@ -5,6 +5,11 @@ final class NotificationService {
     static let shared = NotificationService()
     private init() {}
 
+    var notificationHour: Int {
+        let h = UserDefaults.standard.integer(forKey: "notificationHour")
+        return h == 0 ? 9 : h
+    }
+
     func requestPermission() async -> Bool {
         let center = UNUserNotificationCenter.current()
         let settings = await center.notificationSettings()
@@ -19,7 +24,6 @@ final class NotificationService {
         let center = UNUserNotificationCenter.current()
         let idPrefix = product.id.uuidString
 
-        // Remove existing notifications for this product
         center.removePendingNotificationRequests(withIdentifiers: [
             "\(idPrefix)-2day",
             "\(idPrefix)-1day",
@@ -38,6 +42,7 @@ final class NotificationService {
 
             let content = UNMutableNotificationContent()
             content.sound = .default
+            content.threadIdentifier = "freshtrack-expiry"
 
             switch daysBefore {
             case 2:
@@ -82,8 +87,7 @@ final class NotificationService {
         let calendar = Calendar.current
         let expiryDay = calendar.startOfDay(for: expiryDate)
         guard let notifDay = calendar.date(byAdding: .day, value: -daysBefore, to: expiryDay) else { return nil }
-        // Fire at 09:00
-        return calendar.date(bySettingHour: 9, minute: 0, second: 0, of: notifDay)
+        return calendar.date(bySettingHour: notificationHour, minute: 0, second: 0, of: notifDay)
     }
 
     private func formatDate(_ date: Date) -> String {

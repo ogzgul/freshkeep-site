@@ -62,9 +62,11 @@ final class Product {
     var addedDate: Date
     var barcode: String?
     var isConsumed: Bool
+    var consumedDate: Date?
     var quantity: Int
     var unit: String
     var price: Double?
+    var notes: String = ""
 
     init(
         name: String,
@@ -74,7 +76,8 @@ final class Product {
         barcode: String? = nil,
         quantity: Int = 1,
         unit: String = "pcs",
-        price: Double? = nil
+        price: Double? = nil,
+        notes: String = ""
     ) {
         self.id = UUID()
         self.name = name
@@ -84,9 +87,11 @@ final class Product {
         self.addedDate = Date()
         self.barcode = barcode
         self.isConsumed = false
+        self.consumedDate = nil
         self.quantity = quantity
         self.unit = unit
         self.price = price
+        self.notes = notes
     }
 
     var category: ProductCategory {

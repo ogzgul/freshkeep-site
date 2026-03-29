@@ -1,6 +1,7 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import UIKit
 
 @MainActor
 final class ProductStore: ObservableObject {
@@ -63,7 +64,7 @@ final class ProductStore: ObservableObject {
             NotificationService.shared.cancelNotifications(for: product)
             let existing = (try? context.fetch(FetchDescriptor<ShoppingItem>())) ?? []
             if !existing.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) {
-                context.insert(ShoppingItem(name: product.name, category: product.category))
+                context.insert(ShoppingItem(name: product.name, category: product.category, imageFileName: product.imageFileName))
             }
         }
     }
@@ -83,6 +84,7 @@ final class ProductStore: ObservableObject {
                 UserDefaults.standard.set(true, forKey: "archivedWastedHasEstimates")
             }
         }
+        if let fn = product.imageFileName { ImageStorageService.delete(fileName: fn) }
         NotificationService.shared.cancelNotifications(for: product)
         context.delete(product)
     }
@@ -99,7 +101,7 @@ final class ProductStore: ObservableObject {
     /// Sadece sepete ekle, miktara dokunma. Swipe aksiyonu için kullanılır.
     func addToShoppingListOnly(_ product: Product, context: ModelContext, allItems: [ShoppingItem]) {
         guard !allItems.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) else { return }
-        context.insert(ShoppingItem(name: product.name, category: product.category))
+        context.insert(ShoppingItem(name: product.name, category: product.category, imageFileName: product.imageFileName))
     }
 
     /// Auto-deletes consumed items older than 30 days
@@ -107,6 +109,7 @@ final class ProductStore: ObservableObject {
         let cutoff = Calendar.current.date(byAdding: .day, value: -30, to: Date()) ?? Date()
         let old = products.filter { $0.isConsumed && ($0.consumedDate ?? $0.addedDate) < cutoff }
         for product in old {
+            if let fn = product.imageFileName { ImageStorageService.delete(fileName: fn) }
             context.delete(product)
         }
     }
@@ -123,7 +126,7 @@ final class ProductStore: ObservableObject {
         let existing = (try? context.fetch(FetchDescriptor<ShoppingItem>())) ?? []
         for product in products {
             guard !existing.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) else { continue }
-            context.insert(ShoppingItem(name: product.name, category: product.category))
+            context.insert(ShoppingItem(name: product.name, category: product.category, imageFileName: product.imageFileName))
         }
     }
 }

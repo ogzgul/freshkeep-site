@@ -1,0 +1,166 @@
+2026-03-28 08:54:44 +0000 [MT] Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x98ba35e00; archive(resolved)="<IDEArchive: 0x98dcd34f0>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team(resolved)="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	Chain (15, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x98ba35e00; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionProcessingPipelineContext: 0x98ba36100; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d87af80; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d87ad00; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d87aa80; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d87a800; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d87a580; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d87a300; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d87a080; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d878c80; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d878a00; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d878780; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="<IDEProvisioningBasicTeam: 0x98de008c0; teamID='5PY8Q784PU', teamName='(null)'>">
+	<IDEDistributionContext: 0x98d878500; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="(null)">
+	<IDEDistributionContext: 0x98d878280; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0x98dde40f0>", team="(null)">
+	<IDEDistributionContext: 0x101046630; archive = "<IDEArchive: 0x98dcd34f0>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x98ba35e00>
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionCreateDestRootStep
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionCopyItemStep
+2026-03-28 08:54:44 +0000 [MT] Running /usr/bin/ditto '-V' '/Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app' '/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root/Payload/FreshTrack.app'
+2026-03-28 08:54:44 +0000  >>> Copying /Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app 
+2026-03-28 08:54:44 +0000  copying file ./de.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  2250 bytes for ./de.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./_CodeSignature/CodeResources ... 
+2026-03-28 08:54:44 +0000  4758 bytes for ./_CodeSignature/CodeResources
+2026-03-28 08:54:44 +0000  copying file ./ar.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  2224 bytes for ./ar.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./en.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  252 bytes for ./en.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./turkish_products.json ... 
+2026-03-28 08:54:44 +0000  8969 bytes for ./turkish_products.json
+2026-03-28 08:54:44 +0000  copying file ./FreshTrack ... 
+2026-03-28 08:54:44 +0000  823584 bytes for ./FreshTrack
+2026-03-28 08:54:44 +0000  copying file ./AppIcon60x60@2x.png ... 
+2026-03-28 08:54:44 +0000  8101 bytes for ./AppIcon60x60@2x.png
+2026-03-28 08:54:44 +0000  copying file ./Assets.car ... 
+2026-03-28 08:54:44 +0000  138504 bytes for ./Assets.car
+2026-03-28 08:54:44 +0000  copying file ./tr.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  3330 bytes for ./tr.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./AppIcon76x76@2x~ipad.png ... 
+2026-03-28 08:54:44 +0000  10275 bytes for ./AppIcon76x76@2x~ipad.png
+2026-03-28 08:54:44 +0000  copying file ./fr.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  2195 bytes for ./fr.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./embedded.mobileprovision ... 
+2026-03-28 08:54:44 +0000  12115 bytes for ./embedded.mobileprovision
+2026-03-28 08:54:44 +0000  copying file ./Info.plist ... 
+2026-03-28 08:54:44 +0000  1451 bytes for ./Info.plist
+2026-03-28 08:54:44 +0000  copying file ./PkgInfo ... 
+2026-03-28 08:54:44 +0000  8 bytes for ./PkgInfo
+2026-03-28 08:54:44 +0000 [MT] /usr/bin/ditto exited with 0
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionEmbedProfileStep
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionInfoPlistStep
+2026-03-28 08:54:44 +0000 [MT] Skipping setting DTXcodeBuildDistribution because toolsBuildVersionName was nil.
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionItemRemovalStep
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionAppThinningPlistStep
+2026-03-28 08:54:44 +0000 [MT] Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionSymbolsStep
+2026-03-28 08:54:44 +0000 [MT] Writing /var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Symbols/996EBE30-04E6-36BC-960A-E9651F0979C8.symbols
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionCopyAppleProvidedContentStep
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionAppThinningStep
+2026-03-28 08:54:44 +0000 [MT] Skipping step: IDEDistributionAppThinningStep because it said so
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionArchThinningStep
+2026-03-28 08:54:44 +0000 [MT] Archs to thin for item /Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app are []
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionODRStep
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionStripXattrsStep
+2026-03-28 08:54:44 +0000 [MT] Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionCodesignStep
+2026-03-28 08:54:44 +0000 [MT] Entitlements for <IDEDistributionItem: 0x98dd6e3a0; bundleID='com.oguzgul.freshtrack', path='<DVTFilePath:0x98dd6c1e0:'/Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x98dd6d980; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x98dc6df80; name='Apple Distribution: Oğuz GÜL (5PY8Q784PU)', hash='2BECE48D54D88C88A4F8285431FA49CBAB5908B0', serialNumber='6F68290AC3665F338FB7E2DA7EA27089', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2026-02-23 08:27:47 +0000''>', entitlements='{
+    "application-identifier" = "5PY8Q784PU.com.oguzgul.freshtrack";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = 5PY8Q784PU;
+    "get-task-allow" = 0;
+}', teamID='5PY8Q784PU', identifier='com.oguzgul.freshtrack', executablePath='<DVTFilePath:0x98dd6db00:'/Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app/FreshTrack'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "5PY8Q784PU.com.oguzgul.freshtrack";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = 5PY8Q784PU;
+    "get-task-allow" = 0;
+}
+2026-03-28 08:54:44 +0000 [MT] Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-28 08:54:44 +0000 [MT] Entitlements for <IDEDistributionItem: 0x98dd6e3a0; bundleID='com.oguzgul.freshtrack', path='<DVTFilePath:0x98dd6c1e0:'/Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x98dd6d980; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x98dc6e4c0; name='Apple Distribution: Oğuz GÜL (5PY8Q784PU)', hash='2BECE48D54D88C88A4F8285431FA49CBAB5908B0', serialNumber='6F68290AC3665F338FB7E2DA7EA27089', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2026-02-23 08:27:47 +0000''>', entitlements='{
+    "application-identifier" = "5PY8Q784PU.com.oguzgul.freshtrack";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = 5PY8Q784PU;
+    "get-task-allow" = 0;
+}', teamID='5PY8Q784PU', identifier='com.oguzgul.freshtrack', executablePath='<DVTFilePath:0x98dd6db00:'/Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app/FreshTrack'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "5PY8Q784PU.com.oguzgul.freshtrack";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = 5PY8Q784PU;
+    "get-task-allow" = 0;
+}
+2026-03-28 08:54:44 +0000 [MT] Writing entitlements for <IDEDistributionItem: 0x98dd6e3a0; bundleID='com.oguzgul.freshtrack', path='<DVTFilePath:0x98dd6c1e0:'/Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x98dd6d980; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x98dc6e4c0; name='Apple Distribution: Oğuz GÜL (5PY8Q784PU)', hash='2BECE48D54D88C88A4F8285431FA49CBAB5908B0', serialNumber='6F68290AC3665F338FB7E2DA7EA27089', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2026-02-23 08:27:47 +0000''>', entitlements='{
+    "application-identifier" = "5PY8Q784PU.com.oguzgul.freshtrack";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = 5PY8Q784PU;
+    "get-task-allow" = 0;
+}', teamID='5PY8Q784PU', identifier='com.oguzgul.freshtrack', executablePath='<DVTFilePath:0x98dd6db00:'/Users/oguzgul/Desktop/FreshTrack_App/build/FreshTrack_1.3.xcarchive/Products/Applications/FreshTrack.app/FreshTrack'>', hardenedRuntime='0'>'> to: /var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/entitlements~~~rRlMdm
+2026-03-28 08:54:44 +0000 [MT] invoking codesign: <NSConcreteTask: 0x98e097570; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    2BECE48D54D88C88A4F8285431FA49CBAB5908B0,
+    "--entitlements",
+    "/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/entitlements~~~rRlMdm",
+    "--preserve-metadata=identifier,flags,runtime,launch-constraints,library-constraints",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root/Payload/FreshTrack.app"
+)'>
+2026-03-28 08:54:44 +0000 [MT] codesign output: /var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root/Payload/FreshTrack.app: replacing existing signature
+/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root/Payload/FreshTrack.app: signed app bundle with Mach-O thin (arm64) [com.oguzgul.freshtrack]
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionZipODRItemStep
+2026-03-28 08:54:44 +0000 [MT] Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionCreateIPAStep
+2026-03-28 08:54:44 +0000 [MT] Running /usr/bin/rsync '-8aPhhE' '/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Symbols' '--link-dest' '/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r' '/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root'
+2026-03-28 08:54:44 +0000  Symbols/
+Symbols/996EBE30-04E6-36BC-960A-E9651F0979C8.symbols
+2026-03-28 08:54:44 +0000 [MT] /usr/bin/rsync exited with 0
+2026-03-28 08:54:44 +0000 [MT] Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root' '/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Packages/FreshTrack.ipa'
+2026-03-28 08:54:44 +0000  >>> Copying /var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root 
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/de.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  2250 bytes for ./Payload/FreshTrack.app/de.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/_CodeSignature/CodeResources ... 
+2026-03-28 08:54:44 +0000  4758 bytes for ./Payload/FreshTrack.app/_CodeSignature/CodeResources
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/ar.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  2224 bytes for ./Payload/FreshTrack.app/ar.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/en.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  252 bytes for ./Payload/FreshTrack.app/en.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/turkish_products.json ... 
+2026-03-28 08:54:44 +0000  8969 bytes for ./Payload/FreshTrack.app/turkish_products.json
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/FreshTrack ... 
+2026-03-28 08:54:44 +0000  823584 bytes for ./Payload/FreshTrack.app/FreshTrack
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/AppIcon60x60@2x.png ... 
+2026-03-28 08:54:44 +0000  8101 bytes for ./Payload/FreshTrack.app/AppIcon60x60@2x.png
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/Assets.car ... 
+2026-03-28 08:54:44 +0000  138504 bytes for ./Payload/FreshTrack.app/Assets.car
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/tr.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  3330 bytes for ./Payload/FreshTrack.app/tr.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/AppIcon76x76@2x~ipad.png ... 
+2026-03-28 08:54:44 +0000  10275 bytes for ./Payload/FreshTrack.app/AppIcon76x76@2x~ipad.png
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/fr.lproj/Localizable.strings ... 
+2026-03-28 08:54:44 +0000  2195 bytes for ./Payload/FreshTrack.app/fr.lproj/Localizable.strings
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/embedded.mobileprovision ... 
+2026-03-28 08:54:44 +0000  12115 bytes for ./Payload/FreshTrack.app/embedded.mobileprovision
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/Info.plist ... 
+2026-03-28 08:54:44 +0000  1451 bytes for ./Payload/FreshTrack.app/Info.plist
+2026-03-28 08:54:44 +0000  copying file ./Payload/FreshTrack.app/PkgInfo ... 
+2026-03-28 08:54:44 +0000  8 bytes for ./Payload/FreshTrack.app/PkgInfo
+2026-03-28 08:54:44 +0000  copying file ./Symbols/996EBE30-04E6-36BC-960A-E9651F0979C8.symbols ... 
+2026-03-28 08:54:44 +0000  2247948 bytes for ./Symbols/996EBE30-04E6-36BC-960A-E9651F0979C8.symbols
+2026-03-28 08:54:44 +0000 [MT] /usr/bin/ditto exited with 0
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionAppStoreInformationStep
+2026-03-28 08:54:44 +0000 [MT] Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionGenerateProcessedDistributionItems
+2026-03-28 08:54:44 +0000 [MT] IDEDistributionItem init <DVTFilePath:0x98df1d200:'/var/folders/dm/yw_1h0055px_lfxq_j4xs2680000gn/T/XcodeDistPipeline.~~~myMu2r/Root/Payload/FreshTrack.app'>
+2026-03-28 08:54:44 +0000 [MT] Processing step: IDEDistributionCreateManifestStep
+2026-03-28 08:54:44 +0000 [MT] Skipping step: IDEDistributionCreateManifestStep because it said so

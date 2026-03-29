@@ -67,6 +67,7 @@ final class Product {
     var unit: String
     var price: Double?
     var notes: String = ""
+    var imageFileName: String?
 
     init(
         name: String,
@@ -77,7 +78,8 @@ final class Product {
         quantity: Int = 1,
         unit: String = "pcs",
         price: Double? = nil,
-        notes: String = ""
+        notes: String = "",
+        imageFileName: String? = nil
     ) {
         self.id = UUID()
         self.name = name
@@ -92,6 +94,7 @@ final class Product {
         self.unit = unit
         self.price = price
         self.notes = notes
+        self.imageFileName = imageFileName
     }
 
     var category: ProductCategory {

@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct AddProductView: View {
     @Environment(\.modelContext) private var context
@@ -23,13 +24,17 @@ struct AddProductView: View {
     @State private var hasCustomDate = false
 
     @State private var showScanner = false
+    @State private var showExpiryScanner = false
     @State private var isLookingUp = false
     @State private var lookupError: String? = nil
+    @State private var productImage: UIImage? = nil
 
     var body: some View {
         NavigationStack {
             Form {
                 Section("Product") {
+                    ProductImagePickerView(image: $productImage)
+
                     HStack {
                         TextField("Product name", text: $name)
                         if isLookingUp {
@@ -41,6 +46,23 @@ struct AddProductView: View {
                         ForEach(ProductCategory.allCases, id: \.self) { cat in
                             Label(cat.rawValue, systemImage: "").tag(cat)
                         }
+                    }
+                    if let bc = barcode {
+                        HStack {
+                            Image(systemName: "barcode").foregroundStyle(.secondary)
+                            Text(bc).font(.caption).foregroundStyle(.secondary)
+                            Spacer()
+                            Button("Clear") { barcode = nil }.foregroundStyle(.red).font(.caption)
+                        }
+                    } else {
+                        Button {
+                            showScanner = true
+                        } label: {
+                            Label("Scan Barcode", systemImage: "barcode.viewfinder")
+                        }
+                    }
+                    if let err = lookupError {
+                        Text(err).font(.caption).foregroundStyle(.orange)
                     }
                 }
 
@@ -62,6 +84,12 @@ struct AddProductView: View {
                             .buttonStyle(.bordered)
                             .controlSize(.small)
                         }
+                    }
+
+                    Button {
+                        showExpiryScanner = true
+                    } label: {
+                        Label("Scan Expiry Date", systemImage: "text.viewfinder")
                     }
 
                     if !hasCustomDate {
@@ -87,25 +115,6 @@ struct AddProductView: View {
                         .lineLimit(3...6)
                 }
 
-                Section("Barcode") {
-                    if let bc = barcode {
-                        HStack {
-                            Image(systemName: "barcode").foregroundStyle(.secondary)
-                            Text(bc).font(.caption).foregroundStyle(.secondary)
-                            Spacer()
-                            Button("Clear") { barcode = nil }.foregroundStyle(.red).font(.caption)
-                        }
-                    } else {
-                        Button {
-                            showScanner = true
-                        } label: {
-                            Label("Scan Barcode", systemImage: "barcode.viewfinder")
-                        }
-                    }
-                    if let err = lookupError {
-                        Text(err).font(.caption).foregroundStyle(.orange)
-                    }
-                }
             }
             .navigationTitle("Add Product")
             .navigationBarTitleDisplayMode(.inline)
@@ -123,6 +132,12 @@ struct AddProductView: View {
                 BarcodeScannerSheet(isPresented: $showScanner) { code in
                     barcode = code
                     Task { await lookupBarcode(code) }
+                }
+            }
+            .sheet(isPresented: $showExpiryScanner) {
+                ExpiryDateScannerSheet(isPresented: $showExpiryScanner) { date in
+                    expiryDate = date
+                    hasCustomDate = true
                 }
             }
             .onChange(of: category) { _, newCategory in
@@ -175,6 +190,14 @@ struct AddProductView: View {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }
         let parsedPrice = Double(priceText.replacingOccurrences(of: ",", with: "."))
+
+        var imageFileName: String? = nil
+        if let img = productImage {
+            let fn = ImageStorageService.newFileName()
+            ImageStorageService.save(img, fileName: fn)
+            imageFileName = fn
+        }
+
         let product = Product(
             name: trimmed,
             brand: brand.trimmingCharacters(in: .whitespaces),
@@ -183,7 +206,8 @@ struct AddProductView: View {
             barcode: barcode,
             quantity: quantity,
             price: parsedPrice,
-            notes: notes.trimmingCharacters(in: .whitespacesAndNewlines)
+            notes: notes.trimmingCharacters(in: .whitespacesAndNewlines),
+            imageFileName: imageFileName
         )
         store.add(product, context: context)
         dismiss()

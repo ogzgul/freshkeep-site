@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0027FC895BF28ADDB8C6024D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AC461524C0BE02BC07213D9 /* Assets.xcassets */; };
+		03712EEF2B45703A7093C515 /* ImageStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CB9DA922F0EFAA91F1FEED /* ImageStorageService.swift */; };
 		0E4E74014BC1579EA0D7B0B3 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6ACBE70DF9EA3E13CE11A3 /* Product.swift */; };
 		12A8D682635068B28BA5DB38 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79158189A18EE7BFFD900F6 /* AddProductView.swift */; };
 		1AEC1B78D1FE99A15E19794F /* OpenFoodFactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1359AF55B9B218217EA3C54E /* OpenFoodFactsService.swift */; };
 		1F33E4473B8A7D4E7F197728 /* EditProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA694B580FEF65A57AEE68 /* EditProductView.swift */; };
 		55A3DAA1EE4FF48C5595991A /* ProductStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5607B7C8FCC5D61F3F3BB35C /* ProductStore.swift */; };
+		70EAF33097A55FD8288C4093 /* ExpiryDateScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B063CD6B259066BAFFEA0 /* ExpiryDateScannerView.swift */; };
 		7CE0B2570A1C05117DEA2564 /* turkish_products.json in Resources */ = {isa = PBXBuildFile; fileRef = BC6E215AD31AAD2AFC39F8C0 /* turkish_products.json */; };
 		8C3F6712BB623E3531B689FE /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DAD225A6CDB599247275E /* ProductListView.swift */; };
 		8EB4866E85AC7F570C579097 /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4519A87896093CD123BF600B /* ShoppingListView.swift */; };
@@ -21,6 +23,7 @@
 		B8723B19091C04EFC2D46BB3 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1795A713A62243E21AEF7F /* App.swift */; };
 		BCBE15FD97B69167C771E440 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0626F4134AC7CCC2AE48218 /* ShoppingItem.swift */; };
 		C5654435BDEA06C33C22778E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64240FB60A8F5D9C2AD761D3 /* Localizable.strings */; };
+		C89712B37942FEE85DAE6412 /* ProductImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668F0BB911AB0ABE630FEF /* ProductImagePickerView.swift */; };
 		DBE2F0D96847C78801F16E67 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF825B2415FA7E1FA0C8ADD /* OnboardingView.swift */; };
 		DC0E8DC709AA196E7C2BAD1A /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6ACBE70DF9EA3E13CE11A3 /* Product.swift */; };
 		E1C7400D960DF494D58196E1 /* FreshTrackWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676233EC3376B2345431E13A /* FreshTrackWidget.swift */; };
@@ -30,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00CB9DA922F0EFAA91F1FEED /* ImageStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorageService.swift; sourceTree = "<group>"; };
 		0AC461524C0BE02BC07213D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1212747A64C2E3DCF16CC54A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1359AF55B9B218217EA3C54E /* OpenFoodFactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsService.swift; sourceTree = "<group>"; };
@@ -40,6 +44,7 @@
 		41E0FA3C02D6B2C3213FE337 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		442DAD225A6CDB599247275E /* ProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
 		4519A87896093CD123BF600B /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
+		45668F0BB911AB0ABE630FEF /* ProductImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImagePickerView.swift; sourceTree = "<group>"; };
 		5607B7C8FCC5D61F3F3BB35C /* ProductStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStore.swift; sourceTree = "<group>"; };
 		5E1795A713A62243E21AEF7F /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		676233EC3376B2345431E13A /* FreshTrackWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshTrackWidget.swift; sourceTree = "<group>"; };
@@ -47,6 +52,7 @@
 		7421D34AB66778BC21F0D78B /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B32B5CC1B016D43A8EB6E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D0A32CDE110011744361293 /* FreshTrack.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FreshTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF4B063CD6B259066BAFFEA0 /* ExpiryDateScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateScannerView.swift; sourceTree = "<group>"; };
 		B12F184A9FF5051B33F8797C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B829703DCDB2CF318BFAEAFD /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BC6E215AD31AAD2AFC39F8C0 /* turkish_products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = turkish_products.json; sourceTree = "<group>"; };
@@ -92,7 +98,9 @@
 				E79158189A18EE7BFFD900F6 /* AddProductView.swift */,
 				FA6C417BA8BA8977C30ECC48 /* BarcodeScannerView.swift */,
 				CBCA694B580FEF65A57AEE68 /* EditProductView.swift */,
+				AF4B063CD6B259066BAFFEA0 /* ExpiryDateScannerView.swift */,
 				6BF825B2415FA7E1FA0C8ADD /* OnboardingView.swift */,
+				45668F0BB911AB0ABE630FEF /* ProductImagePickerView.swift */,
 				442DAD225A6CDB599247275E /* ProductListView.swift */,
 				FD421E33C888B86BBAE21B75 /* ProductRowView.swift */,
 				4519A87896093CD123BF600B /* ShoppingListView.swift */,
@@ -128,6 +136,7 @@
 		D87042CCF918719A9831A1C5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				00CB9DA922F0EFAA91F1FEED /* ImageStorageService.swift */,
 				2AC120D6F68686CB785AAA60 /* NotificationService.swift */,
 				1359AF55B9B218217EA3C54E /* OpenFoodFactsService.swift */,
 			);
@@ -264,10 +273,13 @@
 				B8723B19091C04EFC2D46BB3 /* App.swift in Sources */,
 				A47774DB39AF72EF9B8FFCD9 /* BarcodeScannerView.swift in Sources */,
 				1F33E4473B8A7D4E7F197728 /* EditProductView.swift in Sources */,
+				70EAF33097A55FD8288C4093 /* ExpiryDateScannerView.swift in Sources */,
+				03712EEF2B45703A7093C515 /* ImageStorageService.swift in Sources */,
 				8FC0ED91CAA7E735347FC8A8 /* NotificationService.swift in Sources */,
 				DBE2F0D96847C78801F16E67 /* OnboardingView.swift in Sources */,
 				1AEC1B78D1FE99A15E19794F /* OpenFoodFactsService.swift in Sources */,
 				DC0E8DC709AA196E7C2BAD1A /* Product.swift in Sources */,
+				C89712B37942FEE85DAE6412 /* ProductImagePickerView.swift in Sources */,
 				8C3F6712BB623E3531B689FE /* ProductListView.swift in Sources */,
 				F1BE058924624B6B9D69926F /* ProductRowView.swift in Sources */,
 				55A3DAA1EE4FF48C5595991A /* ProductStore.swift in Sources */,
@@ -358,7 +370,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -372,7 +384,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -386,7 +398,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -396,7 +408,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -410,7 +422,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -420,7 +432,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -436,7 +448,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -450,7 +462,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FreshTrack.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>8</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>2BECE48D54D88C88A4F8285431FA49CBAB5908B0</string>
+				<key>dateExpires</key>
+				<string>23.02.2027</string>
+				<key>type</key>
+				<string>Apple Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>5PY8Q784PU.com.oguzgul.freshtrack</string>
+				<key>beta-reports-active</key>
+				<true/>
+				<key>com.apple.developer.team-identifier</key>
+				<string>5PY8Q784PU</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>FreshTrack.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>353e510f-b721-453b-8090-44cbf8123912</string>
+				<key>dateExpires</key>
+				<string>23.02.2027</string>
+				<key>name</key>
+				<string>FreshTrack AppStore</string>
+			</dict>
+			<key>symbols</key>
+			<true/>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>5PY8Q784PU</string>
+				<key>name</key>
+				<string></string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.3</string>
+		</dict>
+	</array>
+</dict>
+</plist>

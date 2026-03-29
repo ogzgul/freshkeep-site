@@ -10,6 +10,8 @@ struct ProductRowView: View {
 
     @State private var showNote = false
     @State private var noteRead = false
+    @State private var showDeleteConfirm = false
+    @State private var showConsumeConfirm = false
 
     var body: some View {
         HStack(spacing: 12) {
@@ -19,10 +21,11 @@ struct ProductRowView: View {
                 .frame(width: 4)
                 .padding(.vertical, 4)
 
-            // Category icon
-            Text(product.category.icon)
-                .font(.title2)
-                .frame(width: 36)
+            // Product image or category icon
+            ProductThumbnailView(
+                fileName: product.imageFileName,
+                fallbackIcon: product.category.icon
+            )
 
             // Name + expiry
             VStack(alignment: .leading, spacing: 2) {
@@ -72,7 +75,11 @@ struct ProductRowView: View {
             // Quantity stepper
             HStack(spacing: 6) {
                 Button {
-                    withAnimation(.easeInOut(duration: 0.15)) { onConsume() }
+                    if product.quantity == 1 {
+                        showConsumeConfirm = true
+                    } else {
+                        withAnimation(.easeInOut(duration: 0.15)) { onConsume() }
+                    }
                 } label: {
                     Image(systemName: "minus")
                         .font(.system(size: 11, weight: .semibold))
@@ -116,9 +123,13 @@ struct ProductRowView: View {
                 : nil
         )
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            if let addToList = onAddToShoppingList {
+            if onAddToShoppingList != nil {
                 Button {
-                    addToList()
+                    if product.quantity == 1 {
+                        showConsumeConfirm = true
+                    } else {
+                        onConsume()
+                    }
                 } label: {
                     Label("Used", systemImage: "checkmark.circle")
                 }
@@ -126,11 +137,36 @@ struct ProductRowView: View {
             }
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-            Button(role: .destructive) {
-                withAnimation { onDelete() }
+            Button {
+                showDeleteConfirm = true
             } label: {
                 Label("Delete", systemImage: "trash")
             }
+            .tint(.red)
+        }
+        .confirmationDialog(
+            "Mark as Used?",
+            isPresented: $showConsumeConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("Mark as Used") {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { onConsume() }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("\"\(product.name)\" will be removed from your fridge and added to the shopping list.")
+        }
+        .confirmationDialog(
+            "Delete \"\(product.name)\"?",
+            isPresented: $showDeleteConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { onDelete() }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This will permanently remove the product from your fridge.")
         }
         .contentShape(Rectangle())
         .onTapGesture { onEdit() }

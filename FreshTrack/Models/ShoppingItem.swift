@@ -8,13 +8,15 @@ final class ShoppingItem {
     var categoryRaw: String
     var addedDate: Date
     var isBought: Bool
+    var imageFileName: String?
 
-    init(name: String, category: ProductCategory = .other) {
+    init(name: String, category: ProductCategory = .other, imageFileName: String? = nil) {
         self.id = UUID()
         self.name = name
         self.categoryRaw = category.rawValue
         self.addedDate = Date()
         self.isBought = false
+        self.imageFileName = imageFileName
     }
 
     var category: ProductCategory {

@@ -102,7 +102,8 @@ struct ShoppingListView: View {
         let product = Product(
             name: item.name,
             category: item.category,
-            expiryDate: expiryDate
+            expiryDate: expiryDate,
+            imageFileName: item.imageFileName
         )
         context.insert(product)
         NotificationService.shared.scheduleNotifications(for: product)
@@ -119,6 +120,7 @@ private struct AddToFridgeSheet: View {
 
     @Environment(\.dismiss) private var dismiss
     @State private var expiryDate = Calendar.current.date(byAdding: .day, value: 7, to: Date()) ?? Date()
+    @State private var showExpiryScanner = false
 
     var body: some View {
         NavigationStack {
@@ -135,6 +137,12 @@ private struct AddToFridgeSheet: View {
                 }
 
                 Section("Expiry Date") {
+                    Button {
+                        showExpiryScanner = true
+                    } label: {
+                        Label("Scan Expiry Date", systemImage: "text.viewfinder")
+                    }
+
                     DatePicker("Expires on", selection: $expiryDate, in: Date()..., displayedComponents: .date)
                         .datePickerStyle(.graphical)
                         .tint(.teal)
@@ -148,6 +156,11 @@ private struct AddToFridgeSheet: View {
                             .controlSize(.small)
                         }
                     }
+                }
+            }
+            .sheet(isPresented: $showExpiryScanner) {
+                ExpiryDateScannerSheet(isPresented: $showExpiryScanner) { date in
+                    expiryDate = date
                 }
             }
             .navigationTitle("Add to Fridge")
@@ -182,7 +195,7 @@ private struct ShoppingRowView: View {
                 Image(systemName: "circle")
                     .foregroundStyle(Color.accentColor)
                     .font(.title3)
-                Text(item.category.icon)
+                ProductThumbnailView(fileName: item.imageFileName, fallbackIcon: item.category.icon)
                 Text(item.name).foregroundStyle(.primary)
                 Spacer()
                 Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)

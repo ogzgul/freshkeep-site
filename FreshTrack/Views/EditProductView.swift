@@ -1,5 +1,6 @@
 import SwiftUI
 import StoreKit
+import UIKit
 
 struct EditProductView: View {
     @Environment(\.modelContext) private var context
@@ -15,6 +16,8 @@ struct EditProductView: View {
     @State private var priceText: String
     @State private var notes: String
     @State private var showDeleteConfirm = false
+    @State private var productImage: UIImage? = nil
+    @State private var imageChanged = false
 
     init(product: Product) {
         self.product = product
@@ -31,6 +34,8 @@ struct EditProductView: View {
         NavigationStack {
             Form {
                 Section("Product") {
+                    ProductImagePickerView(image: $productImage, onChanged: { imageChanged = true })
+
                     TextField("Product name", text: $name)
                     TextField("Brand (optional)", text: $brand)
                     Picker("Category", selection: $category) {
@@ -86,6 +91,11 @@ struct EditProductView: View {
                     }
                 }
             }
+            .task {
+                if let fn = product.imageFileName {
+                    productImage = ImageStorageService.load(fileName: fn)
+                }
+            }
             .navigationTitle("Edit Product")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -104,6 +114,7 @@ struct EditProductView: View {
                 titleVisibility: .visible
             ) {
                 Button("Delete Product", role: .destructive) {
+                    if let fn = product.imageFileName { ImageStorageService.delete(fileName: fn) }
                     NotificationService.shared.cancelNotifications(for: product)
                     context.delete(product)
                     dismiss()
@@ -136,6 +147,20 @@ struct EditProductView: View {
         product.quantity   = quantity
         product.price      = Double(priceText.replacingOccurrences(of: ",", with: "."))
         product.notes      = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if imageChanged {
+            // Delete old image file if it existed
+            if let old = product.imageFileName {
+                ImageStorageService.delete(fileName: old)
+            }
+            if let img = productImage {
+                let fn = ImageStorageService.newFileName()
+                ImageStorageService.save(img, fileName: fn)
+                product.imageFileName = fn
+            } else {
+                product.imageFileName = nil
+            }
+        }
 
         NotificationService.shared.cancelNotifications(for: product)
         NotificationService.shared.scheduleNotifications(for: product)

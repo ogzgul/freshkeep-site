@@ -4,6 +4,7 @@ import SwiftData
 struct ShoppingListView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \ShoppingItem.addedDate, order: .reverse) private var items: [ShoppingItem]
+    @Query(sort: \Cabinet.createdDate) private var allCabinets: [Cabinet]
 
     @State private var newItemName = ""
     @State private var selectedItem: ShoppingItem? = nil
@@ -74,8 +75,8 @@ struct ShoppingListView: View {
                 Text("This will permanently delete all \(pending.count) items.")
             }
             .sheet(item: $selectedItem) { item in
-                AddToFridgeSheet(item: item) { expiryDate in
-                    addToFridge(item: item, expiryDate: expiryDate)
+                AddToFridgeSheet(item: item, cabinets: allCabinets) { expiryDate, cabinetID in
+                    addToFridge(item: item, expiryDate: expiryDate, cabinetID: cabinetID)
                 }
             }
         }
@@ -98,15 +99,17 @@ struct ShoppingListView: View {
         offsets.forEach { context.delete(list[$0]) }
     }
 
-    private func addToFridge(item: ShoppingItem, expiryDate: Date) {
+    private func addToFridge(item: ShoppingItem, expiryDate: Date, cabinetID: UUID?) {
+        let cabinetName = allCabinets.first(where: { $0.id == cabinetID })?.name
         let product = Product(
             name: item.name,
             category: item.category,
             expiryDate: expiryDate,
-            imageFileName: item.imageFileName
+            imageFileName: item.imageFileName,
+            cabinetID: cabinetID
         )
         context.insert(product)
-        NotificationService.shared.scheduleNotifications(for: product)
+        NotificationService.shared.scheduleNotifications(for: product, cabinetName: cabinetName)
         context.delete(item)
         selectedItem = nil
     }
@@ -116,10 +119,12 @@ struct ShoppingListView: View {
 
 private struct AddToFridgeSheet: View {
     let item: ShoppingItem
-    let onConfirm: (Date) -> Void
+    let cabinets: [Cabinet]
+    let onConfirm: (Date, UUID?) -> Void
 
     @Environment(\.dismiss) private var dismiss
     @State private var expiryDate = Calendar.current.date(byAdding: .day, value: 7, to: Date()) ?? Date()
+    @State private var selectedCabinetID: UUID? = nil
     @State private var showExpiryScanner = false
 
     var body: some View {
@@ -134,6 +139,20 @@ private struct AddToFridgeSheet: View {
                         }
                     }
                     .padding(.vertical, 4)
+
+                    if !cabinets.isEmpty {
+                        Picker("Cabinet", selection: $selectedCabinetID) {
+                            Text("None").tag(UUID?.none)
+                            ForEach(cabinets) { cabinet in
+                                Label {
+                                    Text(cabinet.name)
+                                } icon: {
+                                    Image(systemName: cabinet.icon)
+                                }
+                                .tag(Optional(cabinet.id))
+                            }
+                        }
+                    }
                 }
 
                 Section("Expiry Date") {
@@ -158,6 +177,9 @@ private struct AddToFridgeSheet: View {
                     }
                 }
             }
+            .onAppear {
+                selectedCabinetID = cabinets.first?.id
+            }
             .sheet(isPresented: $showExpiryScanner) {
                 ExpiryDateScannerSheet(isPresented: $showExpiryScanner) { date in
                     expiryDate = date
@@ -171,7 +193,7 @@ private struct AddToFridgeSheet: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        onConfirm(expiryDate)
+                        onConfirm(expiryDate, selectedCabinetID)
                     } label: {
                         Label("Add to Fridge", systemImage: "refrigerator").fontWeight(.semibold)
                     }

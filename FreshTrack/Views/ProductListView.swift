@@ -7,14 +7,17 @@ struct ProductListView: View {
     @Environment(\.requestReview) private var requestReview
     @Query private var allProducts: [Product]
     @Query private var allShoppingItems: [ShoppingItem]
+    @Query(sort: \Cabinet.createdDate) private var allCabinets: [Cabinet]
 
     @StateObject private var store = ProductStore()
 
     @State private var showAddProduct = false
     @State private var showStats = false
     @State private var showSettings = false
+    @State private var showCabinetManagement = false
     @State private var sortOption: SortOption = .expiryAsc
     @State private var filterOption: FilterOption = .all
+    @State private var selectedCabinetID: UUID? = nil
     @State private var searchText = ""
     @State private var showShoppingList = false
     @State private var editingProduct: Product? = nil
@@ -27,8 +30,13 @@ struct ProductListView: View {
 
     private var activeProducts: [Product] { allProducts.filter { !$0.isConsumed } }
 
+    private var cabinetFilteredProducts: [Product] {
+        guard let cabID = selectedCabinetID else { return allProducts }
+        return allProducts.filter { $0.cabinetID == cabID }
+    }
+
     private var filteredProducts: [Product] {
-        let sorted = store.sorted(allProducts, by: sortOption, filter: filterOption)
+        let sorted = store.sorted(cabinetFilteredProducts, by: sortOption, filter: filterOption)
         guard !searchText.isEmpty else { return sorted }
         return sorted.filter {
             $0.name.localizedCaseInsensitiveContains(searchText) ||
@@ -36,7 +44,7 @@ struct ProductListView: View {
         }
     }
 
-    private var stats: StoreStats { store.stats(from: allProducts) }
+    private var stats: StoreStats { store.stats(from: cabinetFilteredProducts) }
 
     var body: some View {
         NavigationStack {
@@ -44,11 +52,12 @@ struct ProductListView: View {
             .navigationTitle("FreshKeep")
             .searchable(text: $searchText, prompt: "Search products…")
             .toolbar { toolbarContent }
-            .sheet(isPresented: $showAddProduct) { AddProductView() }
+            .sheet(isPresented: $showAddProduct) { AddProductView(prefillCabinetID: selectedCabinetID) }
             .sheet(isPresented: $showStats) { StatsView() }
             .sheet(isPresented: $showShoppingList) { ShoppingListView() }
             .sheet(item: $editingProduct) { EditProductView(product: $0) }
             .sheet(isPresented: $showSettings) { SettingsSheet(notificationHour: $notificationHour) }
+            .sheet(isPresented: $showCabinetManagement) { CabinetManagementView() }
             .alert("Expired Products", isPresented: Binding(
                 get: { !expiredForAlert.isEmpty },
                 set: { if !$0 { expiredForAlert = [] } }
@@ -75,7 +84,13 @@ struct ProductListView: View {
                 if !expired.isEmpty { expiredForAlert = expired }
             }
             .onChange(of: notificationHour) { _, _ in
-                NotificationService.shared.rescheduleAll(products: allProducts)
+                NotificationService.shared.rescheduleAll(products: allProducts, cabinets: allCabinets)
+            }
+            .onChange(of: allCabinets) { _, newCabinets in
+                if let sel = selectedCabinetID,
+                   !newCabinets.contains(where: { $0.id == sel }) {
+                    selectedCabinetID = nil
+                }
             }
             .overlay(alignment: .bottom) {
                 if let msg = toastMessage {
@@ -104,6 +119,49 @@ struct ProductListView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
+                    if !allCabinets.isEmpty {
+                        CabinetChip(
+                            icon: "tray.2",
+                            name: "All",
+                            color: .teal,
+                            isSelected: selectedCabinetID == nil
+                        ) { selectedCabinetID = nil }
+
+                        ForEach(allCabinets) { cabinet in
+                            CabinetChip(
+                                icon: cabinet.icon,
+                                name: cabinet.name,
+                                color: cabinet.color,
+                                isSelected: selectedCabinetID == cabinet.id
+                            ) { selectedCabinetID = cabinet.id }
+                        }
+                    }
+
+                    Button {
+                        showCabinetManagement = true
+                    } label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: "refrigerator")
+                                .font(.caption.weight(.semibold))
+                            if allCabinets.isEmpty {
+                                Text("Add Cabinet").font(.subheadline)
+                            } else {
+                                Text("Manage").font(.subheadline)
+                            }
+                        }
+                        .padding(.horizontal, 12).padding(.vertical, 6)
+                        .background(Color(.systemGray5), in: Capsule())
+                        .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal, 4)
+            }
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
                     ForEach(FilterOption.allCases, id: \.self) { opt in
                         FilterChip(title: opt.rawValue, isSelected: filterOption == opt) {
                             filterOption = opt
@@ -115,7 +173,7 @@ struct ProductListView: View {
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0))
 
-            if activeProducts.isEmpty {
+            if cabinetFilteredProducts.filter({ !$0.isConsumed }).isEmpty {
                 EmptyStateRow { showAddProduct = true }
                     .listRowBackground(Color.clear)
             } else {
@@ -128,6 +186,9 @@ struct ProductListView: View {
                     ForEach(filteredProducts) { product in
                         ProductRowView(
                             product: product,
+                            cabinet: selectedCabinetID == nil
+                                ? allCabinets.first(where: { $0.id == product.cabinetID })
+                                : nil,
                             onConsume: {
                                 let wasLast = product.quantity == 1
                                 store.markConsumed(product, context: context)
@@ -288,13 +349,49 @@ private struct AlertBannerView: View {
     var body: some View {
         HStack {
             Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.white)
-            Text("\(count) item\(count == 1 ? "" : "s") need attention")
-                .fontWeight(.semibold).foregroundStyle(.white)
+            Text(count == 1
+                ? String(format: NSLocalizedString("%lld item need attention", comment: ""), count)
+                : String(format: NSLocalizedString("%lld items need attention", comment: ""), count)
+            )
+            .fontWeight(.semibold).foregroundStyle(.white)
             Spacer()
         }
         .padding(.horizontal, 16).padding(.vertical, 10)
         .background(.orange.gradient, in: RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal, 16).padding(.top, 4)
+    }
+}
+
+private struct CabinetChip: View {
+    let icon: String
+    let name: String
+    let color: Color
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 5) {
+                Image(systemName: icon)
+                    .font(.caption.weight(.semibold))
+                Text(name)
+                    .font(.subheadline)
+                    .fontWeight(isSelected ? .semibold : .regular)
+            }
+            .padding(.horizontal, 12).padding(.vertical, 6)
+            .background(
+                isSelected ? color.opacity(0.18) : Color(.systemGray5),
+                in: Capsule()
+            )
+            .foregroundStyle(isSelected ? color : .secondary)
+            .overlay(
+                isSelected
+                ? Capsule().strokeBorder(color.opacity(0.5), lineWidth: 1)
+                : nil
+            )
+        }
+        .buttonStyle(.plain)
+        .animation(.easeInOut(duration: 0.15), value: isSelected)
     }
 }
 

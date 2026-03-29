@@ -21,7 +21,7 @@ struct FreshTrackApp: App {
                     .interactiveDismissDisabled(false)
                 }
         }
-        .modelContainer(for: [Product.self, ShoppingItem.self])
+        .modelContainer(for: [Product.self, ShoppingItem.self, Cabinet.self])
     }
 }
 

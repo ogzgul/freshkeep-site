@@ -10,6 +10,10 @@ final class NotificationService {
         return h == 0 ? 9 : h
     }
 
+    private var isTurkish: Bool {
+        Locale.current.language.languageCode?.identifier == "tr"
+    }
+
     func requestPermission() async -> Bool {
         let center = UNUserNotificationCenter.current()
         let settings = await center.notificationSettings()
@@ -20,7 +24,7 @@ final class NotificationService {
         return granted
     }
 
-    func scheduleNotifications(for product: Product) {
+    func scheduleNotifications(for product: Product, cabinetName: String? = nil) {
         let center = UNUserNotificationCenter.current()
         let idPrefix = product.id.uuidString
 
@@ -36,6 +40,9 @@ final class NotificationService {
             (0, "\(idPrefix)-0day")
         ]
 
+        let tr = isTurkish
+        let cabinet = cabinetName.map { " (\($0))" } ?? ""
+
         for (daysBefore, identifier) in triggers {
             guard let fireDate = notificationDate(for: product.expiryDate, daysBefore: daysBefore) else { continue }
             guard fireDate > Date() else { continue }
@@ -46,22 +53,27 @@ final class NotificationService {
 
             switch daysBefore {
             case 2:
-                content.title = "Expiring in 2 days"
-                content.body = "\(product.name) expires on \(formatDate(product.expiryDate)). Use it up!"
+                content.title = tr ? "2 gün içinde bitiyor" : "Expiring in 2 days"
+                content.body  = tr
+                    ? "\(product.name)\(cabinet) \(formatDate(product.expiryDate)) tarihinde bitiyor. Kullanmayı unutma!"
+                    : "\(product.name)\(cabinet) expires on \(formatDate(product.expiryDate)). Use it up!"
             case 1:
-                content.title = "Expiring tomorrow!"
-                content.body = "\(product.name) expires tomorrow. Don't let it go to waste."
+                content.title = tr ? "Yarın bitiyor!" : "Expiring tomorrow!"
+                content.body  = tr
+                    ? "\(product.name)\(cabinet) yarın bitiyor. İsraf etme."
+                    : "\(product.name)\(cabinet) expires tomorrow. Don't let it go to waste."
             case 0:
-                content.title = "Expires today!"
-                content.body = "\(product.name) expires today."
+                content.title = tr ? "Bugün bitiyor!" : "Expires today!"
+                content.body  = tr
+                    ? "\(product.name)\(cabinet) bugün bitiyor."
+                    : "\(product.name)\(cabinet) expires today."
             default:
                 continue
             }
 
             let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            center.add(request)
+            center.add(UNNotificationRequest(identifier: identifier, content: content, trigger: trigger))
         }
     }
 
@@ -74,10 +86,17 @@ final class NotificationService {
         ])
     }
 
-    func rescheduleAll(products: [Product]) {
+    // iOS limiti: uygulama başına 64 pending notification.
+    // Her ürün 3 bildirim → max 21 ürün. En yakın tarihlileri önceliklendir.
+    func rescheduleAll(products: [Product], cabinets: [Cabinet] = []) {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        for product in products where !product.isConsumed {
-            scheduleNotifications(for: product)
+        let active = products
+            .filter { !$0.isConsumed && $0.expiryDate > Date() }
+            .sorted { $0.expiryDate < $1.expiryDate }
+            .prefix(21)
+        for product in active {
+            let cabinetName = cabinets.first(where: { $0.id == product.cabinetID })?.name
+            scheduleNotifications(for: product, cabinetName: cabinetName)
         }
     }
 
@@ -94,6 +113,7 @@ final class NotificationService {
         let fmt = DateFormatter()
         fmt.dateStyle = .medium
         fmt.timeStyle = .none
+        fmt.locale = Locale.current
         return fmt.string(from: date)
     }
 }

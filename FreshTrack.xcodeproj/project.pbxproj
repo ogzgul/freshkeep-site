@@ -30,6 +30,8 @@
 		E511D695C33E22515AC5D0FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41E0FA3C02D6B2C3213FE337 /* Assets.xcassets */; };
 		EF1045DC5700AB3C84FDEE13 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC5C8171BF104FC66CB67AA /* StatsView.swift */; };
 		F1BE058924624B6B9D69926F /* ProductRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD421E33C888B86BBAE21B75 /* ProductRowView.swift */; };
+		AA1B2C3D4E5F6789ABCDEF01 /* Cabinet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B2C3D4E5F6789ABCDEE01 /* Cabinet.swift */; };
+		CC1B2C3D4E5F6789ABCDEF01 /* CabinetManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1B2C3D4E5F6789ABCDEE01 /* CabinetManagementView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		F47BA10703B9ECAEBC87BBB5 /* FreshTrackWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = FreshTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6C417BA8BA8977C30ECC48 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		FD421E33C888B86BBAE21B75 /* ProductRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRowView.swift; sourceTree = "<group>"; };
+		AA1B2C3D4E5F6789ABCDEE01 /* Cabinet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cabinet.swift; sourceTree = "<group>"; };
+		CC1B2C3D4E5F6789ABCDEE01 /* CabinetManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CabinetManagementView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -97,6 +101,7 @@
 			children = (
 				E79158189A18EE7BFFD900F6 /* AddProductView.swift */,
 				FA6C417BA8BA8977C30ECC48 /* BarcodeScannerView.swift */,
+				CC1B2C3D4E5F6789ABCDEE01 /* CabinetManagementView.swift */,
 				CBCA694B580FEF65A57AEE68 /* EditProductView.swift */,
 				AF4B063CD6B259066BAFFEA0 /* ExpiryDateScannerView.swift */,
 				6BF825B2415FA7E1FA0C8ADD /* OnboardingView.swift */,
@@ -146,6 +151,7 @@
 		F924C64C2AF9DC954F76D7B2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AA1B2C3D4E5F6789ABCDEE01 /* Cabinet.swift */,
 				2F6ACBE70DF9EA3E13CE11A3 /* Product.swift */,
 				F0626F4134AC7CCC2AE48218 /* ShoppingItem.swift */,
 			);
@@ -272,6 +278,8 @@
 				12A8D682635068B28BA5DB38 /* AddProductView.swift in Sources */,
 				B8723B19091C04EFC2D46BB3 /* App.swift in Sources */,
 				A47774DB39AF72EF9B8FFCD9 /* BarcodeScannerView.swift in Sources */,
+				AA1B2C3D4E5F6789ABCDEF01 /* Cabinet.swift in Sources */,
+				CC1B2C3D4E5F6789ABCDEF01 /* CabinetManagementView.swift in Sources */,
 				1F33E4473B8A7D4E7F197728 /* EditProductView.swift in Sources */,
 				70EAF33097A55FD8288C4093 /* ExpiryDateScannerView.swift in Sources */,
 				03712EEF2B45703A7093C515 /* ImageStorageService.swift in Sources */,
@@ -370,7 +378,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -384,7 +392,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -398,7 +406,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -408,7 +416,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -422,7 +430,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -432,7 +440,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -448,7 +456,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -462,7 +470,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;

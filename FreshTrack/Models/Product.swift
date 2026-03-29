@@ -68,6 +68,7 @@ final class Product {
     var price: Double?
     var notes: String = ""
     var imageFileName: String?
+    var cabinetID: UUID?
 
     init(
         name: String,
@@ -79,7 +80,8 @@ final class Product {
         unit: String = "pcs",
         price: Double? = nil,
         notes: String = "",
-        imageFileName: String? = nil
+        imageFileName: String? = nil,
+        cabinetID: UUID? = nil
     ) {
         self.id = UUID()
         self.name = name
@@ -95,6 +97,7 @@ final class Product {
         self.price = price
         self.notes = notes
         self.imageFileName = imageFileName
+        self.cabinetID = cabinetID
     }
 
     var category: ProductCategory {
@@ -128,9 +131,14 @@ final class Product {
 
     var expiryLabel: String {
         let days = daysUntilExpiry
-        if days < 0  { return "Expired \(abs(days))d ago" }
-        if days == 0 { return "Expires today" }
-        if days == 1 { return "Expires tomorrow" }
-        return "Expires in \(days) days"
+        if days < 0 {
+            if abs(days) == 1 {
+                return NSLocalizedString("Expired 1 day ago", comment: "")
+            }
+            return String(format: NSLocalizedString("Expired %lld days ago", comment: ""), abs(days))
+        }
+        if days == 0 { return NSLocalizedString("Expires today", comment: "") }
+        if days == 1 { return NSLocalizedString("Expires tomorrow", comment: "") }
+        return String(format: NSLocalizedString("Expires in %lld days", comment: ""), days)
     }
 }

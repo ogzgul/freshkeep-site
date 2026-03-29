@@ -5,11 +5,13 @@ import UIKit
 struct AddProductView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Query(sort: \Cabinet.createdDate) private var allCabinets: [Cabinet]
 
     var prefillBarcode: String? = nil
     var prefillName: String? = nil
     var prefillBrand: String? = nil
     var prefillCategory: ProductCategory? = nil
+    var prefillCabinetID: UUID? = nil
 
     @StateObject private var store = ProductStore()
 
@@ -22,6 +24,7 @@ struct AddProductView: View {
     @State private var priceText: String = ""
     @State private var notes: String = ""
     @State private var hasCustomDate = false
+    @State private var selectedCabinetID: UUID? = nil
 
     @State private var showScanner = false
     @State private var showExpiryScanner = false
@@ -45,6 +48,19 @@ struct AddProductView: View {
                     Picker("Category", selection: $category) {
                         ForEach(ProductCategory.allCases, id: \.self) { cat in
                             Label(cat.rawValue, systemImage: "").tag(cat)
+                        }
+                    }
+                    if !allCabinets.isEmpty {
+                        Picker("Cabinet", selection: $selectedCabinetID) {
+                            Text("None").tag(UUID?.none)
+                            ForEach(allCabinets) { cabinet in
+                                Label {
+                                    Text(cabinet.name)
+                                } icon: {
+                                    Image(systemName: cabinet.icon)
+                                }
+                                .tag(Optional(cabinet.id))
+                            }
                         }
                     }
                     if let bc = barcode {
@@ -149,6 +165,11 @@ struct AddProductView: View {
                 if let pBrand = prefillBrand   { brand    = pBrand }
                 if let pCat = prefillCategory  { category = pCat }
                 if let pBC = prefillBarcode    { barcode  = pBC }
+                if let pCabID = prefillCabinetID {
+                    selectedCabinetID = pCabID
+                } else {
+                    selectedCabinetID = allCabinets.first?.id
+                }
                 expiryDate = defaultExpiry(for: category)
             }
         }
@@ -207,9 +228,11 @@ struct AddProductView: View {
             quantity: quantity,
             price: parsedPrice,
             notes: notes.trimmingCharacters(in: .whitespacesAndNewlines),
-            imageFileName: imageFileName
+            imageFileName: imageFileName,
+            cabinetID: selectedCabinetID
         )
-        store.add(product, context: context)
+        let cabinetName = allCabinets.first(where: { $0.id == selectedCabinetID })?.name
+        store.add(product, context: context, cabinetName: cabinetName)
         dismiss()
     }
 

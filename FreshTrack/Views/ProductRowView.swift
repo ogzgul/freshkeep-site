@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProductRowView: View {
     let product: Product
+    var cabinet: Cabinet? = nil
     var onConsume: () -> Void
     var onIncrement: () -> Void
     var onDelete: () -> Void
@@ -48,6 +49,21 @@ struct ProductRowView: View {
                         .font(.caption)
                 }
                 .foregroundStyle(isExpired ? .white.opacity(0.9) : statusColor)
+
+                if let cab = cabinet {
+                    HStack(spacing: 3) {
+                        Image(systemName: cab.icon)
+                            .font(.caption2)
+                        Text(cab.name)
+                            .font(.caption2)
+                    }
+                    .foregroundStyle(isExpired ? .white.opacity(0.7) : cab.color)
+                    .padding(.horizontal, 6).padding(.vertical, 2)
+                    .background(
+                        isExpired ? Color.white.opacity(0.15) : cab.color.opacity(0.12),
+                        in: Capsule()
+                    )
+                }
 
                 if !product.notes.isEmpty {
                     Button {

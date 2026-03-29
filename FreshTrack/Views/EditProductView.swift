@@ -1,10 +1,12 @@
 import SwiftUI
 import StoreKit
 import UIKit
+import SwiftData
 
 struct EditProductView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Query(sort: \Cabinet.createdDate) private var allCabinets: [Cabinet]
 
     let product: Product
 
@@ -15,19 +17,21 @@ struct EditProductView: View {
     @State private var quantity: Int
     @State private var priceText: String
     @State private var notes: String
+    @State private var selectedCabinetID: UUID?
     @State private var showDeleteConfirm = false
     @State private var productImage: UIImage? = nil
     @State private var imageChanged = false
 
     init(product: Product) {
         self.product = product
-        _name       = State(initialValue: product.name)
-        _brand      = State(initialValue: product.brand)
-        _category   = State(initialValue: product.category)
-        _expiryDate = State(initialValue: product.expiryDate)
-        _quantity   = State(initialValue: product.quantity)
-        _priceText  = State(initialValue: product.price.map { String($0) } ?? "")
-        _notes      = State(initialValue: product.notes)
+        _name              = State(initialValue: product.name)
+        _brand             = State(initialValue: product.brand)
+        _category          = State(initialValue: product.category)
+        _expiryDate        = State(initialValue: product.expiryDate)
+        _quantity          = State(initialValue: product.quantity)
+        _priceText         = State(initialValue: product.price.map { String($0) } ?? "")
+        _notes             = State(initialValue: product.notes)
+        _selectedCabinetID = State(initialValue: product.cabinetID)
     }
 
     var body: some View {
@@ -41,6 +45,19 @@ struct EditProductView: View {
                     Picker("Category", selection: $category) {
                         ForEach(ProductCategory.allCases, id: \.self) { cat in
                             Label(cat.rawValue, systemImage: "").tag(cat)
+                        }
+                    }
+                    if !allCabinets.isEmpty {
+                        Picker("Cabinet", selection: $selectedCabinetID) {
+                            Text("None").tag(UUID?.none)
+                            ForEach(allCabinets) { cabinet in
+                                Label {
+                                    Text(cabinet.name)
+                                } icon: {
+                                    Image(systemName: cabinet.icon)
+                                }
+                                .tag(Optional(cabinet.id))
+                            }
                         }
                     }
                 }
@@ -147,6 +164,7 @@ struct EditProductView: View {
         product.quantity   = quantity
         product.price      = Double(priceText.replacingOccurrences(of: ",", with: "."))
         product.notes      = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        product.cabinetID  = selectedCabinetID
 
         if imageChanged {
             // Delete old image file if it existed

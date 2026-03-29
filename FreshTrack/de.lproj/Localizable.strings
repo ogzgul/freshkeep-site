@@ -43,3 +43,24 @@
 "Expiring in 2 days" = "Läuft in 2 Tagen ab";
 "Expiring tomorrow!" = "Läuft morgen ab!";
 "Expires today!" = "Läuft heute ab!";
+
+/* Schrank-Verwaltung */
+"Cabinets" = "Schränke";
+"No cabinets yet" = "Noch keine Schränke";
+"Add cabinets to organize products\nby location (e.g. Home, Summer House)." = "Schränke hinzufügen, um Produkte\nnach Ort zu organisieren.";
+"New Cabinet" = "Neuer Schrank";
+"Edit Cabinet" = "Schrank bearbeiten";
+"e.g. Home, Summer House" = "z.B. Zuhause, Ferienhaus";
+"Name" = "Name";
+"Icon" = "Symbol";
+"Color" = "Farbe";
+"Preview" = "Vorschau";
+"Add Cabinet" = "Schrank hinzufügen";
+"Manage" = "Verwalten";
+"Cabinet" = "Schrank";
+"None" = "Keiner";
+"Delete Cabinet?" = "Schrank löschen?";
+"Delete Cabinet & Products" = "Schrank und Produkte löschen";
+"%lld products" = "%lld Produkte";
+"\"%@\" and %lld products will be permanently deleted." = "\"%@\" und %lld Produkte werden dauerhaft gelöscht.";
+"\"%@\" will be permanently deleted." = "\"%@\" wird dauerhaft gelöscht.";

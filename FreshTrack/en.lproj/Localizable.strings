@@ -5,3 +5,24 @@
 "%lld item need attention" = "%lld item needs attention";
 "%lld items need attention" = "%lld items need attention";
 "Based on ~$%lld average item cost" = "Based on ~$%lld average item cost";
+
+/* Cabinet Management */
+"Cabinets" = "Cabinets";
+"No cabinets yet" = "No cabinets yet";
+"Add cabinets to organize products\nby location (e.g. Home, Summer House)." = "Add cabinets to organize products\nby location (e.g. Home, Summer House).";
+"New Cabinet" = "New Cabinet";
+"Edit Cabinet" = "Edit Cabinet";
+"e.g. Home, Summer House" = "e.g. Home, Summer House";
+"Name" = "Name";
+"Icon" = "Icon";
+"Color" = "Color";
+"Preview" = "Preview";
+"Add Cabinet" = "Add Cabinet";
+"Manage" = "Manage";
+"Cabinet" = "Cabinet";
+"None" = "None";
+"Delete Cabinet?" = "Delete Cabinet?";
+"Delete Cabinet & Products" = "Delete Cabinet & Products";
+"%lld products" = "%lld products";
+"\"%@\" and %lld products will be permanently deleted." = "\"%@\" and %lld products will be permanently deleted.";
+"\"%@\" will be permanently deleted." = "\"%@\" will be permanently deleted.";

@@ -43,3 +43,24 @@
 "Expiring in 2 days" = "ينتهي خلال يومين";
 "Expiring tomorrow!" = "ينتهي غداً!";
 "Expires today!" = "ينتهي اليوم!";
+
+/* إدارة الخزانات */
+"Cabinets" = "الخزانات";
+"No cabinets yet" = "لا توجد خزانات بعد";
+"Add cabinets to organize products\nby location (e.g. Home, Summer House)." = "أضف خزانات لتنظيم المنتجات\nحسب الموقع.";
+"New Cabinet" = "خزانة جديدة";
+"Edit Cabinet" = "تعديل الخزانة";
+"e.g. Home, Summer House" = "مثال: المنزل، بيت الصيف";
+"Name" = "الاسم";
+"Icon" = "الأيقونة";
+"Color" = "اللون";
+"Preview" = "معاينة";
+"Add Cabinet" = "إضافة خزانة";
+"Manage" = "إدارة";
+"Cabinet" = "الخزانة";
+"None" = "بدون";
+"Delete Cabinet?" = "حذف الخزانة؟";
+"Delete Cabinet & Products" = "حذف الخزانة والمنتجات";
+"%lld products" = "%lld منتج";
+"\"%@\" and %lld products will be permanently deleted." = "سيتم حذف \"%@\" و%lld منتجًا نهائيًا.";
+"\"%@\" will be permanently deleted." = "سيتم حذف \"%@\" نهائيًا.";

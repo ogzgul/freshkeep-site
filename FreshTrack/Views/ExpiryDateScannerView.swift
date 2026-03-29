@@ -286,21 +286,21 @@ enum ExpiryDateParser {
 
         var dates: [Date] = []
 
-        // DD/MM/YYYY  or  DD.MM.YYYY  or  DD-MM-YYYY
-        dates += match(#"(\d{1,2})[/\.\-](\d{1,2})[/\.\-](20\d{2})"#, in: searchText) { g in
+        // DD/MM/YYYY  or  DD.MM.YYYY  or  DD-MM-YYYY  or  DD MM YYYY
+        dates += match(#"(\d{1,2})[/\.\- ](\d{1,2})[/\.\- ](20\d{2})"#, in: searchText) { g in
             makeDate(day: Int(g[0]), month: Int(g[1]), year: Int(g[2]))
         }
-        // MM/YYYY  or  MM.YYYY
-        dates += match(#"(\d{1,2})[/\.](20\d{2})"#, in: searchText) { g in
+        // MM/YYYY  or  MM.YYYY  or  MM YYYY
+        dates += match(#"(\d{1,2})[/\. ](20\d{2})"#, in: searchText) { g in
             makeLastDay(month: Int(g[0]), year: Int(g[1]))
         }
-        // DD/MM/YY  or  DD.MM.YY
-        dates += match(#"(\d{1,2})[/\.\-](\d{1,2})[/\.\-](\d{2})\b"#, in: searchText) { g in
+        // DD/MM/YY  or  DD.MM.YY  or  DD MM YY
+        dates += match(#"(\d{1,2})[/\.\- ](\d{1,2})[/\.\- ](\d{2})\b"#, in: searchText) { g in
             guard let y2 = Int(g[2]) else { return nil }
             return makeDate(day: Int(g[0]), month: Int(g[1]), year: y2 + 2000)
         }
-        // MM/YY  or  MM.YY
-        dates += match(#"(\d{1,2})[/\.](\d{2})\b"#, in: searchText) { g in
+        // MM/YY  or  MM.YY  or  MM YY
+        dates += match(#"(\d{1,2})[/\. ](\d{2})\b"#, in: searchText) { g in
             guard let m = Int(g[0]), m >= 1, m <= 12, let y2 = Int(g[1]) else { return nil }
             return makeLastDay(month: m, year: y2 + 2000)
         }
@@ -332,13 +332,13 @@ enum ExpiryDateParser {
 
     private static func makeDate(day: Int?, month: Int?, year: Int?) -> Date? {
         guard let d = day, let m = month, let y = year,
-              d >= 1, d <= 31, m >= 1, m <= 12, y >= 2024 else { return nil }
+              d >= 1, d <= 31, m >= 1, m <= 12, y >= 2020 else { return nil }
         return Calendar.current.date(from: DateComponents(year: y, month: m, day: d))
     }
 
     private static func makeLastDay(month: Int?, year: Int?) -> Date? {
         guard let m = month, let y = year,
-              m >= 1, m <= 12, y >= 2024 else { return nil }
+              m >= 1, m <= 12, y >= 2020 else { return nil }
         // day=0 of the next month = last day of this month
         return Calendar.current.date(from: DateComponents(year: y, month: m + 1, day: 0))
     }

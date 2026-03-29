@@ -43,3 +43,24 @@
 "Expiring in 2 days" = "Expire dans 2 jours";
 "Expiring tomorrow!" = "Expire demain !";
 "Expires today!" = "Expire aujourd'hui !";
+
+/* Gestion des placards */
+"Cabinets" = "Placards";
+"No cabinets yet" = "Aucun placard";
+"Add cabinets to organize products\nby location (e.g. Home, Summer House)." = "Ajoutez des placards pour organiser vos\nproduits par emplacement.";
+"New Cabinet" = "Nouveau placard";
+"Edit Cabinet" = "Modifier le placard";
+"e.g. Home, Summer House" = "ex. Maison, Maison de vacances";
+"Name" = "Nom";
+"Icon" = "Icône";
+"Color" = "Couleur";
+"Preview" = "Aperçu";
+"Add Cabinet" = "Ajouter un placard";
+"Manage" = "Gérer";
+"Cabinet" = "Placard";
+"None" = "Aucun";
+"Delete Cabinet?" = "Supprimer le placard ?";
+"Delete Cabinet & Products" = "Supprimer le placard et les produits";
+"%lld products" = "%lld produits";
+"\"%@\" and %lld products will be permanently deleted." = "\"%@\" et %lld produits seront supprimés définitivement.";
+"\"%@\" will be permanently deleted." = "\"%@\" sera supprimé définitivement.";

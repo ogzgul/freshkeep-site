@@ -50,9 +50,9 @@ final class ProductStore: ObservableObject {
 
     // MARK: - CRUD helpers (model context passed in)
 
-    func add(_ product: Product, context: ModelContext) {
+    func add(_ product: Product, context: ModelContext, cabinetName: String? = nil) {
         context.insert(product)
-        NotificationService.shared.scheduleNotifications(for: product)
+        NotificationService.shared.scheduleNotifications(for: product, cabinetName: cabinetName)
     }
 
     func markConsumed(_ product: Product, context: ModelContext) {

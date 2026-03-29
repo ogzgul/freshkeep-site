@@ -48,18 +48,15 @@
 "Point camera at barcode" = "Kamerayı barkoda tut";
 
 /* Durum */
-"Fresh" = "Taze";
-"Expiring Soon" = "Yakında Bitiyor";
 "Expires Today/Tomorrow" = "Bugün/Yarın Bitiyor";
-"Expired" = "Bozulmuş";
 "Expires today" = "Bugün bitiyor";
 "Expires tomorrow" = "Yarın bitiyor";
 "Expires in %lld days" = "%lld günde bitiyor";
 "Expired %lld days ago" = "%lld gün önce bitti";
 "Expired 1 day ago" = "1 gün önce bitti";
 
-/* Swipe işlemleri */
-"Used" = "Kullandım";
+/* Swipe işlemleri & İstatistik kartı */
+"Used" = "Kullanıldı";
 
 /* Kategoriler */
 "Dairy" = "Süt Ürünleri";
@@ -75,8 +72,6 @@
 /* İstatistikler */
 "Statistics" = "İstatistikler";
 "Active" = "Aktif";
-"Used" = "Kullanıldı";
-"Expired" = "Bozuldu";
 "Savings Tracker" = "Tasarruf Takibi";
 "Estimated saved" = "Tahmini tasarruf";
 "Estimated wasted" = "Tahmini israf";
@@ -93,3 +88,66 @@
 "Expires today!" = "Bugün bitiyor!";
 "Use it up!" = "Kullanmayı unutma!";
 "Don't let it go to waste." = "İsraf etme.";
+
+/* Ayarlar */
+"Settings" = "Ayarlar";
+"Reminder Time" = "Hatırlatma Saati";
+"Daily Reminder Time" = "Günlük Hatırlatma Saati";
+"You'll be notified at this time 2 days before, 1 day before, and on the expiry day." = "Son kullanma tarihinden 2 gün önce, 1 gün önce ve günü bu saatte bildirim alacaksın.";
+
+/* Ürün Listesi - Uyarılar ve Toast */
+"Expired Products" = "Bozulmuş Ürünler";
+"Add to Shopping List" = "Alışveriş Listesine Ekle";
+"Dismiss" = "Kapat";
+"No products match this filter." = "Bu filtreyle eşleşen ürün yok.";
+"Added to shopping list" = "Alışveriş listesine eklendi";
+
+/* Ürün Satırı - Eylemler */
+"Mark as Used?" = "Kullanıldı Olarak İşaretle?";
+"Mark as Used" = "Kullanıldı Olarak İşaretle";
+"Note" = "Not";
+"This will permanently remove the product from your fridge." = "Bu ürün buzdolabından kalıcı olarak silinecek.";
+
+/* İstatistikler - Eksik */
+"Wasted" = "İsraf";
+"Saved" = "Tasarruf";
+"estimated" = "tahmini";
+
+/* Alışveriş Listesi */
+"Shopping List" = "Alışveriş Listesi";
+"Shopping list is empty" = "Alışveriş listesi boş";
+"Consumed or expired products appear here automatically." = "Kullanılan veya bozulan ürünler otomatik olarak buraya eklenir.";
+"Add item…" = "Ürün ekle…";
+"Clear Shopping List" = "Listeyi Temizle";
+"Delete All Items" = "Tüm Öğeleri Sil";
+"Add to Fridge" = "Buzdolabına Ekle";
+"Scan Expiry Date" = "Son Kullanma Tarihini Tara";
+
+/* Ürün Ekleme / Düzenleme */
+"Edit Product" = "Ürünü Düzenle";
+"Delete Product" = "Ürünü Sil";
+"Price (optional)" = "Fiyat (isteğe bağlı)";
+"Notes (optional)" = "Notlar (isteğe bağlı)";
+"Suggested based on category" = "Kategoriye göre önerildi";
+"Storage location, usage tips…" = "Saklama yeri, kullanım ipuçları…";
+
+/* Dolap Yönetimi */
+"Cabinets" = "Dolaplar";
+"No cabinets yet" = "Henüz dolap yok";
+"Add cabinets to organize products\nby location (e.g. Home, Summer House)." = "Ürünleri konuma göre düzenlemek için\ndolap ekle (örn. Ev, Yazlık).";
+"New Cabinet" = "Yeni Dolap";
+"Edit Cabinet" = "Dolabı Düzenle";
+"e.g. Home, Summer House" = "örn. Ev, Yazlık";
+"Name" = "Ad";
+"Icon" = "Simge";
+"Color" = "Renk";
+"Preview" = "Önizleme";
+"Add Cabinet" = "Dolap Ekle";
+"Manage" = "Yönet";
+"Cabinet" = "Dolap";
+"None" = "Yok";
+"Delete Cabinet?" = "Dolap Silinsin mi?";
+"Delete Cabinet & Products" = "Dolabı ve Ürünleri Sil";
+"%lld products" = "%lld ürün";
+"\"%@\" and %lld products will be permanently deleted." = "\"%@\" ve içindeki %lld ürün kalıcı olarak silinecek.";
+"\"%@\" will be permanently deleted." = "\"%@\" kalıcı olarak silinecek.";

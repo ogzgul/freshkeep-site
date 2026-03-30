@@ -65,6 +65,24 @@ struct ProductRowView: View {
                     )
                 }
 
+                if let allergenChipText {
+                    HStack(spacing: 4) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.caption2)
+                        Text(allergenChipText)
+                            .font(.caption2)
+                            .lineLimit(1)
+                    }
+                    .foregroundStyle(allergenChipForeground)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 3)
+                    .background(
+                        allergenChipBackground,
+                        in: Capsule()
+                    )
+                    .accessibilityLabel(Text("Allergen Warning"))
+                }
+
                 if !product.notes.isEmpty {
                     Button {
                         showNote = true
@@ -209,6 +227,32 @@ struct ProductRowView: View {
         case .urgent:  return "exclamationmark.triangle.fill"
         case .expired: return "xmark.circle.fill"
         }
+    }
+
+    private var sanitizedAllergens: [String] {
+        (product.allergens ?? []).compactMap { allergen in
+            let trimmed = allergen.trimmingCharacters(in: .whitespacesAndNewlines)
+            return trimmed.isEmpty ? nil : trimmed
+        }
+    }
+
+    private var allergenChipText: String? {
+        guard let firstAllergen = sanitizedAllergens.first else { return nil }
+        let extraCount = sanitizedAllergens.count - 1
+
+        if extraCount > 0 {
+            return "\(firstAllergen) +\(extraCount)"
+        }
+
+        return firstAllergen
+    }
+
+    private var allergenChipForeground: Color {
+        isExpired ? .white : .red
+    }
+
+    private var allergenChipBackground: Color {
+        isExpired ? Color.white.opacity(0.18) : Color.red.opacity(0.10)
     }
 }
 

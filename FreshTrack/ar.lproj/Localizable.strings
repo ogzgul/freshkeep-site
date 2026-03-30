@@ -31,6 +31,14 @@
 "Expired %lld days ago" = "انتهى منذ %lld أيام";
 "Point camera at barcode" = "وجّه الكاميرا نحو الباركود";
 "Product not found — enter details manually." = "المنتج غير موجود — أدخل التفاصيل يدوياً.";
+"Allergen Warning" = "تحذير من مسببات الحساسية";
+"Barcode Details" = "تفاصيل الباركود";
+"Ingredients" = "المكونات";
+"Saved from barcode scan" = "تم الحفظ من مسح الباركود";
+"Approximate match found, searching for details." = "تم العثور على مطابقة تقريبية، جارٍ البحث عن التفاصيل.";
+"Product found, fetching ingredient details." = "تم العثور على المنتج، جارٍ جلب تفاصيل المكونات.";
+"Ingredient details updated." = "تم تحديث تفاصيل المكونات.";
+"Approximate match found, please verify the product name." = "تم العثور على مطابقة تقريبية، يرجى التحقق من اسم المنتج.";
 "Dairy" = "منتجات الألبان";
 "Meat & Seafood" = "اللحوم والمأكولات البحرية";
 "Produce" = "الخضروات والفواكه";

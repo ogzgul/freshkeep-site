@@ -19,6 +19,7 @@
 		8C3F6712BB623E3531B689FE /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DAD225A6CDB599247275E /* ProductListView.swift */; };
 		8EB4866E85AC7F570C579097 /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4519A87896093CD123BF600B /* ShoppingListView.swift */; };
 		8FC0ED91CAA7E735347FC8A8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC120D6F68686CB785AAA60 /* NotificationService.swift */; };
+		B1F0B12345C67890D1234567 /* AppIntentsBuildMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B12345C67890D1234567 /* AppIntentsBuildMarker.swift */; };
 		A47774DB39AF72EF9B8FFCD9 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C417BA8BA8977C30ECC48 /* BarcodeScannerView.swift */; };
 		B8723B19091C04EFC2D46BB3 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1795A713A62243E21AEF7F /* App.swift */; };
 		BCBE15FD97B69167C771E440 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0626F4134AC7CCC2AE48218 /* ShoppingItem.swift */; };
@@ -54,6 +55,7 @@
 		7421D34AB66778BC21F0D78B /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B32B5CC1B016D43A8EB6E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D0A32CDE110011744361293 /* FreshTrack.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FreshTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1F0B12345C67890D1234567 /* AppIntentsBuildMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntentsBuildMarker.swift; sourceTree = "<group>"; };
 		AF4B063CD6B259066BAFFEA0 /* ExpiryDateScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryDateScannerView.swift; sourceTree = "<group>"; };
 		B12F184A9FF5051B33F8797C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B829703DCDB2CF318BFAEAFD /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				5E1795A713A62243E21AEF7F /* App.swift */,
+				A1F0B12345C67890D1234567 /* AppIntentsBuildMarker.swift */,
 				41E0FA3C02D6B2C3213FE337 /* Assets.xcassets */,
 				64240FB60A8F5D9C2AD761D3 /* Localizable.strings */,
 				BC6E215AD31AAD2AFC39F8C0 /* turkish_products.json */,
@@ -277,6 +280,7 @@
 			files = (
 				12A8D682635068B28BA5DB38 /* AddProductView.swift in Sources */,
 				B8723B19091C04EFC2D46BB3 /* App.swift in Sources */,
+				B1F0B12345C67890D1234567 /* AppIntentsBuildMarker.swift in Sources */,
 				A47774DB39AF72EF9B8FFCD9 /* BarcodeScannerView.swift in Sources */,
 				AA1B2C3D4E5F6789ABCDEF01 /* Cabinet.swift in Sources */,
 				CC1B2C3D4E5F6789ABCDEF01 /* CabinetManagementView.swift in Sources */,
@@ -373,12 +377,13 @@
 		};
 		1EE3AB75C1F54E68E0F19DAA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				buildSettings = {
+					APP_SHORTCUTS_ENABLE_FLEXIBLE_MATCHING = NO;
+					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+					ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+					CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -392,7 +397,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+					MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -403,10 +408,11 @@
 		};
 		925DF4E920F6F8EA8D86585D /* Release */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				buildSettings = {
+					APP_SHORTCUTS_ENABLE_FLEXIBLE_MATCHING = NO;
+					CODE_SIGN_IDENTITY = "Apple Distribution";
+					CODE_SIGN_STYLE = Manual;
+					CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -416,7 +422,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+					MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -427,10 +433,11 @@
 		};
 		9A0B58ED7004AC0649253252 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				buildSettings = {
+					APP_SHORTCUTS_ENABLE_FLEXIBLE_MATCHING = NO;
+					CODE_SIGN_IDENTITY = "Apple Distribution";
+					CODE_SIGN_STYLE = Manual;
+					CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = FreshTrackWidget/Info.plist;
@@ -440,7 +447,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+					MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack.widget;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;
@@ -451,12 +458,13 @@
 		};
 		C9C153874C4371837B8089B3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				buildSettings = {
+					APP_SHORTCUTS_ENABLE_FLEXIBLE_MATCHING = NO;
+					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+					ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+					CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 5PY8Q784PU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FreshKeep;
@@ -470,7 +478,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+					MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oguzgul.freshtrack;
 				PROVISIONING_PROFILE_SPECIFIER = "FreshTrack AppStore";
 				SDKROOT = iphoneos;

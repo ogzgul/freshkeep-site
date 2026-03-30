@@ -63,9 +63,7 @@ final class ProductStore: ObservableObject {
             product.consumedDate = Date()
             NotificationService.shared.cancelNotifications(for: product)
             let existing = (try? context.fetch(FetchDescriptor<ShoppingItem>())) ?? []
-            if !existing.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) {
-                context.insert(ShoppingItem(name: product.name, category: product.category, imageFileName: product.imageFileName))
-            }
+            upsertShoppingItem(for: product, existingItems: existing, context: context)
         }
     }
 
@@ -100,8 +98,7 @@ final class ProductStore: ObservableObject {
 
     /// Sadece sepete ekle, miktara dokunma. Swipe aksiyonu için kullanılır.
     func addToShoppingListOnly(_ product: Product, context: ModelContext, allItems: [ShoppingItem]) {
-        guard !allItems.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) else { return }
-        context.insert(ShoppingItem(name: product.name, category: product.category, imageFileName: product.imageFileName))
+        upsertShoppingItem(for: product, existingItems: allItems, context: context)
     }
 
     /// Auto-deletes consumed items older than 30 days
@@ -125,9 +122,17 @@ final class ProductStore: ObservableObject {
     func addExpiredToShoppingList(_ products: [Product], context: ModelContext) {
         let existing = (try? context.fetch(FetchDescriptor<ShoppingItem>())) ?? []
         for product in products {
-            guard !existing.contains(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) else { continue }
-            context.insert(ShoppingItem(name: product.name, category: product.category, imageFileName: product.imageFileName))
+            upsertShoppingItem(for: product, existingItems: existing, context: context)
         }
+    }
+
+    private func upsertShoppingItem(for product: Product, existingItems: [ShoppingItem], context: ModelContext) {
+        if let existingItem = existingItems.first(where: { !$0.isBought && $0.name.lowercased() == product.name.lowercased() }) {
+            existingItem.absorbMetadata(from: product)
+            return
+        }
+
+        context.insert(ShoppingItem(product: product))
     }
 }
 

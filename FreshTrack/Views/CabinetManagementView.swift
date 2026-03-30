@@ -12,7 +12,7 @@ struct CabinetManagementView: View {
 
     @State private var showAddCabinet = false
     @State private var editingCabinet: Cabinet?
-    @State private var deletingCabinet: Cabinet?
+    @State private var deletingCabinet: DeleteCandidate?
 
     var body: some View {
         NavigationStack {
@@ -39,7 +39,11 @@ struct CabinetManagementView: View {
                             .onTapGesture { editingCabinet = cabinet }
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button(role: .destructive) {
-                                    deletingCabinet = cabinet
+                                    deletingCabinet = DeleteCandidate(
+                                        id: cabinet.id,
+                                        name: cabinet.name,
+                                        productCount: productCount(for: cabinet)
+                                    )
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -74,16 +78,15 @@ struct CabinetManagementView: View {
                 titleVisibility: .visible
             ) {
                 Button("Delete Cabinet & Products", role: .destructive) {
-                    if let cab = deletingCabinet { deleteCabinet(cab) }
+                    if let candidate = deletingCabinet { deleteCabinet(id: candidate.id) }
                 }
                 Button("Cancel", role: .cancel) { deletingCabinet = nil }
             } message: {
-                if let cab = deletingCabinet {
-                    let count = productCount(for: cab)
-                    if count > 0 {
-                        Text("\"\(cab.name)\" and \(count) products will be permanently deleted.")
+                if let candidate = deletingCabinet {
+                    if candidate.productCount > 0 {
+                        Text("\"\(candidate.name)\" and \(candidate.productCount) products will be permanently deleted.")
                     } else {
-                        Text("\"\(cab.name)\" will be permanently deleted.")
+                        Text("\"\(candidate.name)\" will be permanently deleted.")
                     }
                 }
             }
@@ -94,17 +97,31 @@ struct CabinetManagementView: View {
         allProducts.filter { $0.cabinetID == cabinet.id }.count
     }
 
-    private func deleteCabinet(_ cabinet: Cabinet) {
-        let products = allProducts.filter { $0.cabinetID == cabinet.id }
+    private func deleteCabinet(id cabinetID: UUID) {
+        let products = allProducts.filter { $0.cabinetID == cabinetID }
+        let cabinet = cabinets.first { $0.id == cabinetID }
+
+        if editingCabinet?.id == cabinetID {
+            editingCabinet = nil
+        }
+        deletingCabinet = nil
+
         for product in products {
             NotificationService.shared.cancelNotifications(for: product)
             if let fn = product.imageFileName { ImageStorageService.delete(fileName: fn) }
             context.delete(product)
         }
-        context.delete(cabinet)
+        if let cabinet {
+            context.delete(cabinet)
+        }
         try? context.save()
-        deletingCabinet = nil
     }
+}
+
+private struct DeleteCandidate: Identifiable {
+    let id: UUID
+    let name: String
+    let productCount: Int
 }
 
 // MARK: - CabinetRow

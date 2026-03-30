@@ -69,6 +69,8 @@ final class Product {
     var notes: String = ""
     var imageFileName: String?
     var cabinetID: UUID?
+    var ingredients: String?
+    var allergens: [String]?
 
     init(
         name: String,
@@ -81,7 +83,9 @@ final class Product {
         price: Double? = nil,
         notes: String = "",
         imageFileName: String? = nil,
-        cabinetID: UUID? = nil
+        cabinetID: UUID? = nil,
+        ingredients: String? = nil,
+        allergens: [String]? = nil
     ) {
         self.id = UUID()
         self.name = name
@@ -98,6 +102,8 @@ final class Product {
         self.notes = notes
         self.imageFileName = imageFileName
         self.cabinetID = cabinetID
+        self.ingredients = ingredients
+        self.allergens = allergens
     }
 
     var category: ProductCategory {

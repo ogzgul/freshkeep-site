@@ -30,7 +30,11 @@ struct AddProductView: View {
     @State private var showExpiryScanner = false
     @State private var isLookingUp = false
     @State private var lookupError: String? = nil
+    @State private var lookupInfo: String? = nil
     @State private var productImage: UIImage? = nil
+    @State private var scannedIngredients: String? = nil
+    @State private var scannedAllergens: [String] = []
+    @State private var lastLookupWasApproximate = false
 
     var body: some View {
         NavigationStack {
@@ -77,8 +81,37 @@ struct AddProductView: View {
                             Label("Scan Barcode", systemImage: "barcode.viewfinder")
                         }
                     }
+                    
+                    if !scannedAllergens.isEmpty {
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundStyle(.red)
+                                Text("Allergen Warning")
+                                    .font(.subheadline).bold().foregroundStyle(.red)
+                            }
+                            Text(scannedAllergens.joined(separator: ", "))
+                                .font(.subheadline).bold().foregroundStyle(.red)
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    
+                    if let ing = scannedIngredients, !ing.isEmpty {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Ingredients")
+                                .font(.subheadline).bold()
+                            Text(ing)
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                        .padding(.vertical, 4)
+                    }
+
                     if let err = lookupError {
                         Text(err).font(.caption).foregroundStyle(.orange)
+                    }
+
+                    if let info = lookupInfo {
+                        Text(info).font(.caption).foregroundStyle(.secondary)
                     }
                 }
 
@@ -146,8 +179,9 @@ struct AddProductView: View {
             }
             .sheet(isPresented: $showScanner) {
                 BarcodeScannerSheet(isPresented: $showScanner) { code in
-                    barcode = code
-                    Task { await lookupBarcode(code) }
+                    let normalizedCode = OpenFoodFactsService.normalizedBarcode(code)
+                    barcode = normalizedCode
+                    Task { await lookupBarcode(normalizedCode) }
                 }
             }
             .sheet(isPresented: $showExpiryScanner) {
@@ -164,7 +198,7 @@ struct AddProductView: View {
                 if let pName = prefillName     { name     = pName }
                 if let pBrand = prefillBrand   { brand    = pBrand }
                 if let pCat = prefillCategory  { category = pCat }
-                if let pBC = prefillBarcode    { barcode  = pBC }
+                if let pBC = prefillBarcode    { barcode  = OpenFoodFactsService.normalizedBarcode(pBC) }
                 if let pCabID = prefillCabinetID {
                     selectedCabinetID = pCabID
                 } else {
@@ -229,28 +263,111 @@ struct AddProductView: View {
             price: parsedPrice,
             notes: notes.trimmingCharacters(in: .whitespacesAndNewlines),
             imageFileName: imageFileName,
-            cabinetID: selectedCabinetID
+            cabinetID: selectedCabinetID,
+            ingredients: scannedIngredients,
+            allergens: scannedAllergens.isEmpty ? nil : scannedAllergens
         )
+
+        if let barcode {
+            OpenFoodFactsService.shared.remember(
+                barcode: barcode,
+                name: trimmed,
+                brand: brand,
+                category: category,
+                ingredients: scannedIngredients,
+                allergens: scannedAllergens
+            )
+        }
+
         let cabinetName = allCabinets.first(where: { $0.id == selectedCabinetID })?.name
         store.add(product, context: context, cabinetName: cabinetName)
         dismiss()
     }
 
     private func lookupBarcode(_ code: String) async {
-        isLookingUp = true
-        lookupError = nil
-        if let result = await OpenFoodFactsService.shared.lookup(barcode: code) {
+        await MainActor.run {
+            isLookingUp = true
+            lookupError = nil
+            lookupInfo = nil
+            scannedIngredients = nil
+            scannedAllergens = []
+            lastLookupWasApproximate = false
+        }
+
+        if let localResult = OpenFoodFactsService.shared.localLookup(barcode: code) {
             await MainActor.run {
-                if name.isEmpty  { name  = result.name }
-                if brand.isEmpty { brand = result.brand }
-                category = result.category
+                applyLookupResult(localResult, overwriteText: false)
+                lastLookupWasApproximate = localResult.isApproximate
+
+                if localResult.isApproximate {
+                    lookupInfo = NSLocalizedString("Approximate match found, searching for details.", comment: "")
+                } else if localResult.ingredients == nil && (localResult.allergens?.isEmpty != false) {
+                    lookupInfo = NSLocalizedString("Product found, fetching ingredient details.", comment: "")
+                }
+            }
+
+            let shouldEnrich = localResult.isApproximate
+                || localResult.ingredients == nil
+                || (localResult.allergens?.isEmpty ?? true)
+
+            if shouldEnrich {
+                if let remoteResult = await OpenFoodFactsService.shared.remoteLookup(barcode: code) {
+                    await MainActor.run {
+                        guard barcode == code else { return }
+                        applyLookupResult(remoteResult, overwriteText: lastLookupWasApproximate)
+                        lastLookupWasApproximate = false
+
+                        if remoteResult.ingredients != nil || (remoteResult.allergens?.isEmpty == false) {
+                            lookupInfo = NSLocalizedString("Ingredient details updated.", comment: "")
+                        } else {
+                            lookupInfo = nil
+                        }
+                    }
+                } else {
+                    await MainActor.run {
+                        guard barcode == code else { return }
+                        if localResult.isApproximate {
+                            lookupInfo = NSLocalizedString("Approximate match found, please verify the product name.", comment: "")
+                        } else {
+                            lookupInfo = nil
+                        }
+                    }
+                }
+            }
+        } else if let remoteResult = await OpenFoodFactsService.shared.remoteLookup(barcode: code) {
+            await MainActor.run {
+                guard barcode == code else { return }
+                applyLookupResult(remoteResult, overwriteText: false)
             }
         } else {
             await MainActor.run {
-                lookupError = "Product not found — enter details manually."
+                lookupError = NSLocalizedString("Product not found — enter details manually.", comment: "")
             }
         }
-        isLookingUp = false
+
+        await MainActor.run {
+            isLookingUp = false
+        }
+    }
+
+    private func applyLookupResult(_ result: FoodFactsProduct, overwriteText: Bool) {
+        if overwriteText || name.isEmpty {
+            name = result.name
+        }
+
+        if overwriteText || brand.isEmpty {
+            brand = result.brand
+        }
+
+        category = result.category
+
+        if let ingredients = result.ingredients, !ingredients.isEmpty {
+            scannedIngredients = ingredients
+        }
+
+        if let allergens = result.allergens, !allergens.isEmpty {
+            scannedAllergens = allergens
+        }
     }
 }
 

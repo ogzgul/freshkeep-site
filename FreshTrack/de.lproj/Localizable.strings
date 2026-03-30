@@ -31,6 +31,14 @@
 "Expired %lld days ago" = "Vor %lld Tagen abgelaufen";
 "Point camera at barcode" = "Kamera auf Barcode richten";
 "Product not found — enter details manually." = "Produkt nicht gefunden — Details manuell eingeben.";
+"Allergen Warning" = "Allergenwarnung";
+"Barcode Details" = "Barcode-Details";
+"Ingredients" = "Zutaten";
+"Saved from barcode scan" = "Aus dem Barcode-Scan gespeichert";
+"Approximate match found, searching for details." = "Ungefähre Übereinstimmung gefunden, Details werden gesucht.";
+"Product found, fetching ingredient details." = "Produkt gefunden, Zutatenangaben werden geladen.";
+"Ingredient details updated." = "Zutatenangaben wurden aktualisiert.";
+"Approximate match found, please verify the product name." = "Ungefähre Übereinstimmung gefunden, bitte Produktnamen prüfen.";
 "Dairy" = "Milchprodukte";
 "Meat & Seafood" = "Fleisch & Meeresfrüchte";
 "Produce" = "Obst & Gemüse";

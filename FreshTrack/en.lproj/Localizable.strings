@@ -5,6 +5,14 @@
 "%lld item need attention" = "%lld item needs attention";
 "%lld items need attention" = "%lld items need attention";
 "Based on ~$%lld average item cost" = "Based on ~$%lld average item cost";
+"Allergen Warning" = "Allergen Warning";
+"Barcode Details" = "Barcode Details";
+"Ingredients" = "Ingredients";
+"Saved from barcode scan" = "Saved from barcode scan";
+"Approximate match found, searching for details." = "Approximate match found, searching for details.";
+"Product found, fetching ingredient details." = "Product found, fetching ingredient details.";
+"Ingredient details updated." = "Ingredient details updated.";
+"Approximate match found, please verify the product name." = "Approximate match found, please verify the product name.";
 
 /* Cabinet Management */
 "Cabinets" = "Cabinets";

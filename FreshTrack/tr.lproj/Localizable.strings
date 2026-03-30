@@ -43,6 +43,14 @@
 "Clear" = "Temizle";
 "Add" = "Ekle";
 "Product not found — enter details manually." = "Ürün bulunamadı — bilgileri elle gir.";
+"Allergen Warning" = "Alerjen Uyarısı";
+"Barcode Details" = "Barkod Detayları";
+"Ingredients" = "İçindekiler";
+"Saved from barcode scan" = "Barkod taramasından kaydedildi";
+"Approximate match found, searching for details." = "Yaklaşık eşleşme bulundu, detaylar aranıyor.";
+"Product found, fetching ingredient details." = "Ürün bulundu, içerik bilgisi getiriliyor.";
+"Ingredient details updated." = "İçerik bilgisi güncellendi.";
+"Approximate match found, please verify the product name." = "Yaklaşık eşleşme bulundu, ürün adını kontrol edin.";
 
 /* Tarayıcı */
 "Point camera at barcode" = "Kamerayı barkoda tut";

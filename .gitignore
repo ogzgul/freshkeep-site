@@ -1,0 +1,14 @@
+.DS_Store
+
+# Local assistant / editor files
+.claude/
+
+# Xcode user-specific files
+*.xcuserstate
+xcuserdata/
+
+# Build artifacts
+build/
+DerivedData/
+build.log
+

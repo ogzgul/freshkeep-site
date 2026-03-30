@@ -62,6 +62,63 @@ struct EditProductView: View {
                     }
                 }
 
+                if hasScannedDetails {
+                    Section("Barcode Details") {
+                        if let barcode = product.barcode, !barcode.isEmpty {
+                            HStack(spacing: 8) {
+                                Image(systemName: "barcode")
+                                    .foregroundStyle(.secondary)
+                                Text(barcode)
+                                    .font(.caption.monospacedDigit())
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+
+                        if !sanitizedAllergens.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                        .foregroundStyle(.red)
+                                    Text("Allergen Warning")
+                                        .font(.subheadline)
+                                        .bold()
+                                        .foregroundStyle(.red)
+                                }
+
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 6) {
+                                        ForEach(sanitizedAllergens, id: \.self) { allergen in
+                                            Text(allergen)
+                                                .font(.caption)
+                                                .foregroundStyle(.red)
+                                                .padding(.horizontal, 8)
+                                                .padding(.vertical, 5)
+                                                .background(Color.red.opacity(0.10), in: Capsule())
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.vertical, 2)
+                        }
+
+                        if let trimmedIngredients {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Ingredients")
+                                    .font(.subheadline)
+                                    .bold()
+                                Text(trimmedIngredients)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding(.vertical, 2)
+                        }
+
+                        Text("Saved from barcode scan")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
                 Section("Expiry Date") {
                     DatePicker(
                         "Expires on",
@@ -151,6 +208,24 @@ struct EditProductView: View {
         case "ar": return "﷼"
         default: return "$"
         }
+    }
+
+    private var trimmedIngredients: String? {
+        let trimmed = product.ingredients?.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let trimmed, !trimmed.isEmpty else { return nil }
+        return trimmed
+    }
+
+    private var sanitizedAllergens: [String] {
+        (product.allergens ?? []).compactMap { allergen in
+            let trimmed = allergen.trimmingCharacters(in: .whitespacesAndNewlines)
+            return trimmed.isEmpty ? nil : trimmed
+        }
+    }
+
+    private var hasScannedDetails: Bool {
+        let hasBarcode = !(product.barcode?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        return hasBarcode || trimmedIngredients != nil || !sanitizedAllergens.isEmpty
     }
 
     private func save() {

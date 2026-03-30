@@ -103,11 +103,21 @@ struct ShoppingListView: View {
         let cabinetName = allCabinets.first(where: { $0.id == cabinetID })?.name
         let product = Product(
             name: item.name,
+            brand: item.brand ?? "",
             category: item.category,
             expiryDate: expiryDate,
+            barcode: item.barcode,
+            notes: item.notes ?? "",
             imageFileName: item.imageFileName,
             cabinetID: cabinetID
         )
+        product.ingredients = item.ingredients?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
+            ? item.ingredients?.trimmingCharacters(in: .whitespacesAndNewlines)
+            : nil
+        product.allergens = item.allergens?.compactMap { allergen in
+            let trimmed = allergen.trimmingCharacters(in: .whitespacesAndNewlines)
+            return trimmed.isEmpty ? nil : trimmed
+        }
         context.insert(product)
         NotificationService.shared.scheduleNotifications(for: product, cabinetName: cabinetName)
         context.delete(item)
